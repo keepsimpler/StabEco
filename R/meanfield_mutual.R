@@ -163,5 +163,5 @@ get_stability_from_params_xstars <- function(params, xstars) {
   m_tilde_mean <- mean(m_tilde)
   m_tilde_sd <- sd(m_tilde)
   
-  c(xstars = xstars, xstars_mean = xstars_mean, xstars_min = min(xstars), xstars_sd = xstars_sd, persistence = persistence, M_lambda1 = M_lambda1, M_lambda2 = M_lambda2, M_tilde_lambda1 = M_tilde_lambda1, M_tilde_lambda2 = M_tilde_lambda2, M_tilde_dot = M_tilde_dot, Jshadow_lambda1 = Jshadow_lambda1, Jshadow_lambda2 = Jshadow_lambda2, Jshadow_dot = Jshadow_dot, J_lambda1 = J_lambda1, J_lambda2 = J_lambda2, J_dot = J_dot, m_tilde = m_tilde, m_tilde_mean = m_tilde_mean, m_tilde_sd = m_tilde_sd) # r = r, id = id, m = m, h = h, graphs_index = graphs_index, 
+  c(xstars = xstars, xstars_mean = xstars_mean, xstars_min = min(xstars), xstars_max = max(xstars), xstars_sd = xstars_sd, persistence = persistence, M_lambda1 = M_lambda1, M_lambda2 = M_lambda2, M_tilde_lambda1 = M_tilde_lambda1, M_tilde_lambda2 = M_tilde_lambda2, M_tilde_dot = M_tilde_dot, Jshadow_lambda1 = Jshadow_lambda1, Jshadow_lambda2 = Jshadow_lambda2, Jshadow_dot = Jshadow_dot, J_lambda1 = J_lambda1, J_lambda2 = J_lambda2, J_dot = J_dot, m_tilde = m_tilde, m_tilde_mean = m_tilde_mean, m_tilde_sd = m_tilde_sd) # r = r, id = id, m = m, h = h, graphs_index = graphs_index, 
 }

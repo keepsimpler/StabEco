@@ -1,0 +1,1064 @@
+\documentclass[a4paper,fleqn,12pt]{article}
+\usepackage{geometry}
+\geometry{left=1.8cm,right=1.6cm,top=1.5cm,bottom=1.5cm}
+\usepackage{tabu}
+\usepackage{mathtools}
+%\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{arydshln}  % add dashed line to tables and equations
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{authblk}
+\linespread{1.4}
+
+\title{
+Stability and critical transitions in mutualistic systems
+%\footnote{\color{red}The text with gray color are extracted from SI, and may need to be simplified.}
+}
+
+\author[1,2]{Wenfeng Feng }
+\author[2,*]{ Richard Bailey}
+\affil[1]{School of Computer Science and Technology, Henan Polytechnic University, Jiaozuo, China.}
+\affil[2]{School of Geography and the Environment, University of Oxford, Oxford, UK.}
+
+\begin{document}
+\maketitle
+
+\begin{abstract} 
+\end{abstract}
+
+\begin{comment}
+Explore the built-in driving mechanisms that effect on Stability measurements, Types and Empirical Signals of critical transitions, through by an analytical theoretical framework.
+Anticipating critical transitions of ecological, social and economical systems is critical in a more and more globalizing and uncertainty world.
+Recognizing the intrinsic(built-in) dynamic mechanisms of systems that cause critical transitions is most important in order to anticipate critical transitions.
+Here we develop a theoretical framework to dig out the intrinsic(built-in) dynamic mechanisms of mutualistic ecological systems that cause critical transitions.
+We first derive a general analytic criterion of two different type of critical transitions that capture all influencing factors of a mutualistic system except for its structural features.
+The `critical slowing down'(Variance, and autocorrelation?) signal of critical transitions has a direct relation with the resistance(sensitivity) of system to external perturbations in our nonstructural(not structural) mutualistic model.
+We next show that structural features like heterogeneity(nestedness?) affect on critical transitions through by our criterion(the built-in mechanisms).
+Our framework organically combine the structural features that cause critical transitions and the empirical signals(indicators) of proximity to such critical transitions through by the intrinsic(built-in) dynamic mechanisms that cause such critical transitions.
+\end{comment}
+
+
+The complexity - stability relationship, a key focus in theoretical ecology, and likely(probably) being generalized and applied to economical and social systems, have evolved and developed from many aspects\cite{ives_stability_2007,allesina_stabilitycomplexity_2015,mccann_diversity-stability_2000}.
+First, the definition of stability extended from the local asymptotic stability\cite{allesina_stability_2012,tang_correlation_2014}, to persistence\cite{bastolla_architecture_2009,james_disentangling_2012,thebault_stability_2010}, to productivity (total abundance)\cite{suweis_emergence_2013}, to alternative steady states and catastrophic transitions)\cite{beisner_alternative_2003,kefi_when_2016,scheffer_catastrophic_2001,scheffer_catastrophic_2003}, which are defined under deterministic dynamic model,
+to the temporal community-level stability and species-level stability\cite{ives_stability_1999,lehman_biodiversity_2000,thibaut_understanding_2013,loreau_species_2008,gross_species_2014}, to the empirical signals of critical transitions\cite{scheffer_early-warning_2009,dakos_methods_2012,carpenter_early_2011,dakos_critical_2014}, which are defined under stochastic dynamic model.
+%from the different types of critical transitions in deterministic dynamic,
+%to the empirical signals of critical transitions in stochastic dynamic,
+%from the alternative steady states to critical transitions.
+Second, the explored inner properties(mechanisms? complexities?) of ecological systems that measure complexity and affect stability,
+extended from biodiversity(species richness) and connectance\cite{naeem_biodiversity_1997,cardinale_biodiversity_2013}, to interaction strengths and their correlation\cite{okuyama_network_2008,rohr_structural_2014,tang_correlation_2014}, to interaction asymmetry\cite{bascompte_asymmetric_2006,vazquez_species_2007,rooney_structural_2006}, to structural features like degree heterogeneity and modularity\cite{bastolla_architecture_2009,saavedra_estimating_2013,lever_sudden_2014,rohr_structural_2014,okuyama_network_2008,suweis_emergence_2013,thebault_stability_2010,grilli_modularity_2016},
+except for the handling time, a long-time ignored feature(received relatively little attention), reflecting non-linear function among species.
+Third, the types of target ecological systems changed from random communities, to competitive communities\cite{ives_stability_1999,lehman_biodiversity_2000,ives_general_2002}, to exploitative communities (food-webs)\cite{otto_allometric_2007,allesina_predicting_2015,thebault_stability_2010}, to mutualsitic communities\cite{bastolla_architecture_2009,saavedra_estimating_2013,lever_sudden_2014,rohr_structural_2014,okuyama_network_2008,suweis_emergence_2013}, and to competitive-exploitative-mutualistic mixed communities\cite{mougi_diversity_2012,suweis_disentangling_2013}.
+
+In the above developing process of complexity - stability relationship:
+1) contradictions and debates like the biodiversity(species richness) decrease the local stability while increase the temporal stability in competitive communities;
+the structural feature, degree heterogeneity, increase or decrease the persistence and local stability.
+2) separated with each other, like the empirical signals of critical transitions and the inner properties mentioned above which is definitely the cause of the happening of critical transitions, are unconnected;
+the different definitions of stability mentioned above are separated, while they are actually determined by the same set of inner properties mentioned above and thus should be connected and correlated.
+3) some inner properties like the handling time are missed or ignored, while it is actually an important and critical features in realistic ecological systems.
+
+Thus a integrated framework is urgently needed \cite{ives_stability_2007,scheffer_anticipating_2012}, that can unify and investigate the mechanisms driving(evoking) the multiple relationships between multiple inner properties and multiple definitions of stability in an unified framework,
+that can solve the contradictions and debates, connect the separated fields, and complement the missing inner properties and stability definitions,
+and pave the way for the new exploration and booming in the complexity - stability relationship.
+
+We here proposed such a framework.
+Our framework is constructed through three steps.
+
+\paragraph*{First step: the general model} We propose a general mutualistic model that combine the deterministic dynamic and the stochastic dynamic, and also include(incorporate) the environmental pressure to explore critical transitions.
+(Please see SI for detail)
+
+{\color{red}Extract the main dynamic equations in matrix form, explain all the parameters, express of the Jacobian matrix and the covariance matrix, }
+
+We start with the general case of a community composed of $n$ species.
+These $n$ species are divided into two groups: $n_p$ species of primary producers (henceforth shorted to `plants'), and $n_a$ species of what can be regarded as animals, such as insects, seed dispersers (henceforth `animals'), with $n = n_p + n_a$.
+Species belonging to the same group are in direct competition with each other, while mutualistic interactions occur between species belonging to the different groups.
+
+The deterministic dynamics of the $n$ species describing by a system of $n$ differential equations can be written in matrix form as:
+\begin{equation} \label{eq:dynamic-mutual-matrix-form}
+\frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{x} \left( \mathbf{r} - \mathbf{s} \mathbf{x} - \mathbf{C} \mathbf{x} + \frac{ \mathbf{M} \mathbf{x}}{1 + h \mathbf{M} \mathbf{x}} \right) = \mathbf{F}(\mathbf{x}, \mathbf{P}) \;\; ,
+\end{equation}
+where 
+$\mathbf{x}$ is the vector of species abundances,
+$\mathbf{P} = [\mathbf{r}, \mathbf{s}, \mathbf{C}, \mathbf{M}, h]$ is the set of parameters, including 
+the vector of per capita intrinsic growth rates $\mathbf{r}$,
+the vector of per capita self-regulation strengths $\mathbf{s}$,
+the competitive interactions matrix $\mathbf{C}$,
+the mutualistic interactions matrix $\mathbf{M}$,
+and the handling time $h$. 
+The competitive interaction matrix $\mathbf{C}$ represent the competitive effects among species within the same group, is constructed from the competitive adjacency matrix $\mathbf{G}_c$ which represent the existences of competitive interactions,
+i.e. the $(i,j)$-th element of the competitive adjacency matrix $C_{ij} > 0$ when the $(i,j)$-th element of the competitive adjacency matrix $(\mathbf{G}_c)_{ij}$ is equal to 1; otherwise, both elements equal to 0.
+We make a simplifying assumption that all species in the same group competitively interact with each other (ecologically defensible to a good approximation?). 
+Under the `full competition' assumption, the competitive adjacency matrix $\mathbf{G}_c$ becomes a block diagonal matrix of $(n \times n)$, including two diagonal blocks,
+one a full $(n_p \times n_p)$ matrix, the other a full $(n_a \times n_a)$ matrix, with diagonal elements equal to $0$ and off-diagonal elements equal to $1$.
+The mutualistic interaction matrix $\mathbf{M}$ represent the mutualistic effects among species between two different groups, is constructed from the mutualistic adjacency matrix $\mathbf{G}_m$ which represent the existences of mutualistic interactions,
+i.e. the $(i,j)$-th element of the mutualistic adjacency matrix $M_{ij} > 0$ when the $(i,j)$-th element of the mutualistic adjacency matrix $(\mathbf{G}_m)_{ij}$ is equal to 1; otherwise, both elements equal to 0.
+
+We suppose that the mutualistic system described above has a feasible equilibrium where abundances of all species are strictly positive, and therefore the following equilibrium condition is satisfied:
+\begin{equation} \label{eq:equilibrium-condition}
+ \mathbf{r} - \mathbf{s} \mathbf{x}^* - \mathbf{C} \mathbf{x}^* + \frac{ \mathbf{M} \mathbf{x}^*}{1 + h \mathbf{M} \mathbf{x}^*} = 0 \;\;,
+\end{equation}
+where $\mathbf{x}^*=[x_1^*, \ldots, x_i^*, \ldots, x_n^*] > \mathbf{0}$ is the vector of equilibrium abundances of all $n$ species.
+
+Then the Jacobian matrix at equilibrium can be written as:
+\begin{align} \label{eq:jacobian}
+\mathbf{J} &= \textrm{diag}(\mathbf{x}^*) \cdot \widetilde{\mathbf{J}} \nonumber\\
+% &= \textrm{diag}(\mathbf{x}^*) \cdot (\mathbf{J}_c + \mathbf{J}_m) \nonumber\\
+ &= \textrm{diag}(\mathbf{x}^*) \cdot ( - \mathrm{diag}(\mathbf{s}) - \mathbf{C} + \widetilde{\mathbf{M}} ) \nonumber\\
+ &= \textrm{diag}(\mathbf{x}^*) \cdot ( - \mathrm{diag}(\mathbf{s}) - \mathbf{C} + \mathrm{diag}(\boldsymbol{\phi}) \cdot \mathbf{M} )  \;\; ,
+\end{align}
+where
+$\boldsymbol{\phi} = [\phi_1, \cdots, \phi_n]$ and
+\begin{align} \label{eq:phi}
+\phi_i = \frac{1}{(1 + h\sum_{j=1}^nM_{ij}x_j^*)^2}
+\end{align}
+is {\color{red}the effective mutualistic strength. This variable is caused by non-linear handling time, we want to give it a name, any advice about the name?} on species $i$ at equilibrium caused by Positive handling time ($h>0$).
+It depends on the species abundances at equilibrium, 
+and is inversely proportional to the square of the equilibrium abundances of its mutualistic interacting species.
+Therefore, when the equilibrium abundances of species decrease, the mutualistic strengths at equilibrium increase, and vice versa.
+
+The stochastic dynamics of the $n$ species describing by a system of $n$ stochastic equations can be written in matrix form as:
+\begin{equation} \label{eq:dynamic-mutual-stochastic-matrix-form}
+\mathrm{d}\mathbf{x} = \mathbf{F}(\mathbf{x}, \mathbf{P}) \mathrm{d}t + \mathbf{\Sigma} \cdot \mathrm{d}\mathbf{W} \;\; ,
+\end{equation}
+where
+$\mathbf{F}(\mathbf{x}, \mathbf{P})$ is the right hand side of the matrix differential equation (\ref{eq:dynamic-mutual-matrix-form}), which represents the deterministic dynamics of each species;
+$\mathrm{d}\mathbf{W} = [dW_1, \ldots, dW_i, \ldots, dW_n]$ represents a vector of derivatives of independent Wiener processes, that is, a vector of Gaussian noise with mean $0$ and variance $1$, scaled by $\sigma$;
+$\mathbf{\Sigma}$ is a diagonal matrix with identical diagonal elements equal to $\sigma$, that represent the variance--covariance matrix of $n$ independent Gaussian noise elements.
+
+The variance--covariance matrix $\mathbf{V}$ of its stationary probability distribution can be approximately obtained by solving the continuous Lyapunov equation equation below\cite{gardiner_handbook_1985,neumaier_multivariate_1998,suweis_early_2014}:
+\begin{align} \label{eq:mou-lyapunov}
+\mathbf{V} \mathbf{J} + \mathbf{J}^\top \mathbf{V} = - \mathbf{\Sigma}^2 = 
+- \mathrm{diag}(\sigma^2) \;\;.  %\mathrm{diag}(X^*) 
+\end{align}
+The above equation connect the Jacobian matrix $\mathbf{J}$ at equilibrium of deterministic dynamic with the variance--covariance matrix $\mathbf{V}$ of the stationary probability distribution of stochastic dynamic.
+
+
+\paragraph*{Second step: the nonstructural model} 
+We add three restrictions to the general model to get a nonstructural model that is simple enough to be mathematically tractable, hence allowing deep insights in to the effects of parameters on system behaviour, whilst preserving the essential features, the key nature, of a mutualistic system.
+
+First restriction excludes the structural features of interactions such as degree heterogeneity and modularity.
+All $n$ species have the equal number of mutualistic interactions, i.e. the adjacency matrix describing the topology of mutualistic interactions $\mathbf{G}_m$ is a regular bipartite graph with the regular node degree $k_m$.
+Second restriction excludes variances for all parameters $\mathbf{P} = [\mathbf{r}, \mathbf{s}, \mathbf{C}, \mathbf{M}]$ using a mean field approximation\cite{bastolla_architecture_2009,saavedra_estimating_2013,rohr_structural_2014},
+where we set $r_i = r$ and $s_i = s$ for each species $i$, 
+and $C_{ij} = c$ for each competitive interaction in the same group,
+and $M_{ij} = m$ for each mutualistic interaction between two different groups;
+Third restriction requires equal species number within each of the two groups ($n_p = n_a = \frac{n}{2}$).
+
+\paragraph*{Third step} 
+We release these three restrictions separately to evaluate the effects of structural feature - degree heterogeneity, parameters variances, and when species number of two groups are different.
+
+\paragraph*{The nonstructural model(in detail)} 
+After adding three restrictions for the general model, the gotten nonstructural model has below simplifications:
+
+\paragraph*{1)} The competitive interaction matrix $\mathbf{C}$ reduces to a block diagonal matrix of $(n \times n)$, including two diagonal blocks, each of which is a full $(\frac{n}{2} \times \frac{n}{2})$ matrix with diagonal elements equal to $0$ and off-diagonal elements equal to $c$, where the number of competitive interactions for each species $i$ is $k_c = \frac{n}{2}-1$.
+The mutualistic interaction matrix $\mathbf{M}$ reduces to a matrix representing a weighted regular bipartite network, whose structure $\mathbf{G}_m$ is the adjacency matrix of a regular bipartite graph with regular degree $k_m$, and weights of all elements equal to $m$;
+
+\paragraph*{2)} The feasible equilibrium condition equation (\ref{eq:equilibrium-condition}) is degenerated to a scalar equation:
+\begin{align} \label{eq:equilibrium-condition-nonstructural}
+r - sx^* - k_ccx^* + \frac{k_m m x^*}{1+hk_m m x^*} = 0 \;\;,
+\end{align}
+where $x^* > 0$ is the same equilibrium abundance for all $n$ species.
+This equation can be transformed to a quadratic equation, and solved to get two possible equilibrium abundances (We could prove that the minus one is always unstable, so in not mentioned specifically, $x^*$ denote the larger one following.):
+\begin{align} \label{eq:nonstructural-x1}
+x^*_{1,2} &= \frac{\rho + rh\rho - 1 \pm \sqrt{(\rho+rh\rho+1)^2-4\rho}}{2hk_mm} \;\;,
+\end{align}
+where
+\begin{align} \label{eq:rho}
+\rho &= \frac{k_mm}{s+k_cc} 
+\end{align}
+is the ratio of mutualistic strength to competitive strength,
+since $(s+k_cc)$ is the total competitive strength of species, including intra-species competition($s$) and inter-species competition($k_cc$), 
+while $k_mm$ is the total mutualistic strength of species.
+Thus the dynamics of the nonstructural model could be partitioned into the strong mutualism regime or the weak mutualism regime according to the value of parameter $\rho$ is larger than or less than 1\cite{bastolla_architecture_2009,saavedra_estimating_2013,rohr_structural_2014,suweis_emergence_2013}.
+We give three examples to illustrate the effect of parameter $\rho$ on the two possible equilibriums abundances (as shown in Figure \ref{fig:nonstructural-equilibrium-strong-weak}):
+the strong mutualism regime ($\rho > 1$), weak mutualism regime ($\rho < 1$), 
+and a special case where the mutualistic strength is equal to the competitive strength ($\rho = 1$).
+The solid lines show feasible equilibria i.e. $x^*>0$, while the dashed lines show non-feasible equilibriums i.e. $x^* < 0$.
+As shown in Figure \ref{fig:nonstructural-equilibrium-strong-weak}, if the intrinsic growth rate is positive ($r>0$) only one feasible equilibrium exists, i.e. $x_1 > 0, x_2 < 0$.
+However, if the
+intrinsic growth rate is negative ($r<0$) (i.e. if an isolated species cannot support itself), it is 
+only when the nonstructural model is in the strong mutualism regime ($\rho > 1$),
+that feasible populations(abundance) can exist, and in addition this is the only situation where
+two possible feasible equilibriums exist, i.e. $x^*_1 > 0, x^*_2 > 0$.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{depend/nonstructural-equilibrium-strong-weak.eps}
+\end{center}
+\caption{Examples of equilibria of the nonstructural model. In this case $k_mm = 1, h = 0.3, s+k_cc = 0.5(Strong, \rho = 2 > 1), 1(Equal, \rho = 1), 1.5(Weak, \rho = 2/3 < 1)$.
+{\color{red}The diamond point $(r_{min}, x_{min})$ is a possible critical point where bifurcations happen (under the condition that $\rho > 1$). The three dotted points is the possible abundances at equilibrium, the point with positive abundance is when $\rho > 1$, the point with negative abundance is when $\rho < 1$}
+}
+\label{fig:nonstructural-equilibrium-strong-weak}
+\end{figure}
+
+
+We also get the minimal $r$ value where the two possible equilibrium abundances collide (where bifurcations may happen.)
+\begin{align} \label{eq:rmin}
+r_{\mathrm{min}} &= -\frac{1}{h} (1 - \sqrt{\frac{1}{\rho}})^2 \le 0
+\end{align}
+
+\paragraph*{3)} The Jacobian matrix at the feasible equilibrium (Equation \ref{eq:jacobian}) is reduced to:
+\begin{align} \label{eq:jacobian-nonstructural}
+\mathbf{J}
+% &= x^*\mathrm{I}_n \cdot \widetilde{\mathbf{J}} \nonumber\\
+% &= x^*\mathrm{I}_n \cdot (\mathbf{J}_c + \mathbf{J}_m) \nonumber\\
+ &= x^*\mathrm{I}_n \cdot ( - s\mathrm{I}_n - c\mathbf{G}_c + \phi m \mathbf{G}_m ) \;\; , 
+\end{align}
+where
+\begin{align} \label{eq:phi-nonstructural}
+\phi = \frac{1}{(1+hk_m mx^*)^2} 
+\end{align}
+is the reduced version of the effective mutualistic strength (Equation \ref{eq:phi})
+
+The eigenvalue distributions of the Jacobian matrix $\mathbf{J}$ and its compositions: the mutualistic adjacency matrix $\mathbf{G}_m$ and the competitive adjacency matrix $\mathbf{G}_c$ conform to Allesina and Tang's theory\cite{allesina_stability_2012,tang_correlation_2014,tang_reactivity_2014}, that 
+the eigenvalues include two parts: 
+the first part is a single eigenvalue equal to the (expected) row sum of the matrix; 
+the second part is the bulk of other eigenvalues which are approximately distributed on an semicircle centered at a particular value $-E$(the negative expectation of all off-diagonal elements).
+And the eigenvalues the Jacobian matrix $\mathbf{J}$ can be calculated from the eigenvalues of the mutualistic adjacency matrix $\mathbf{G}_m$ and the competitive adjacency matrix $\mathbf{G}_c$.
+(Please see SI){\color{red}should we note the bipartite `twins' nature of $\mathbf{G}_m$ which do not conform to Allesina exactly, or just leave it in SI.}
+
+Thus, we can define three components of the eigenvalues of the Jacobian matrix:
+
+First, we name the eigenvalue that equals the row sum as the `dot' eigenvalue, defined and calculated as:
+\begin{align} \label{eq:nonstructural-dot-definition}
+\lambda_d(\mathbf{J}) 
+%&= x^*(-s - c\lambda_d(\mathbf{G}_c) + \phi m \lambda_d(\mathbf{G}_m)) \nonumber\\
+%&= x^*(-s - ck_c + \phi mk_m) \\
+&= -\frac{(\rho + rh\rho - 1 + \sqrt{(\rho+rh\rho+1)^2-4\rho})\sqrt{(\rho+rh\rho+1)^2-4\rho}}{h\rho(\rho + rh\rho + 1 + \sqrt{(\rho+rh\rho+1)^2-4\rho})}
+\end{align}
+%where $\lambda_d(\mathbf{G}_c) = k_c$ is the `dot' eigenvalue of the competitive adjacency matrix, $\lambda_d(\mathbf{G}_m) = k_m$ is the `dot' eigenvalue of the mutualistic adjacency matrix.
+
+Second, we name the right most (largest) value in the semicircle as the `semicircle' eigenvalue, defined by:
+\begin{align} \label{eq:nonstructural-semicircle-definition}
+\lambda_s(\mathbf{J}) 
+%&= x^*(-s - c\lambda_s(\mathbf{G}_c) + \phi m \lambda_s(\mathbf{G}_m)) \nonumber\\
+&= x^*(-s + c + \phi m\lambda_s(\mathbf{G}_m)),
+\end{align}
+where
+%$\lambda_s(\mathbf{G}_c) = -1$ is the `semicircle' eigenvalue of the competitive adjacency matrix, 
+$\lambda_s(\mathbf{G}_m)$ is the `semicircle' eigenvalue of the mutualistic adjacency matrix can be estimated (Please see SI) by:
+\begin{equation} \label{eq:bipartite-est}
+\lambda_s(\mathbf{G}_m) \approx \left\{
+\begin{array}{ll}
+2\sqrt{k_m-1} & \textrm{, \;\;if\;\;} 2 < k_m < \frac{\sqrt{(2n-3)}+1}{2} \\
+2\sqrt{\frac{k_m(n - 2k_m)}{n-2}} & \textrm{, \;\;if\;\;} \frac{\sqrt{(2n-3)}+1}{2} < k_m < \frac{n(n-2)}{2n+12} \\
+\frac{n}{2} - k_m & \textrm{, \;\;if\;\;} \frac{n(n-2)}{2n+12} < k_m \le \frac{n}{2}-1 
+\end{array}
+\right.
+\end{equation}
+
+
+Third, we define the difference between the `dot' eigenvalue and the `semicircle' eigenvalue as the spectral gap of the Jacobian matrix:
+\begin{align} \label{eq:nonstructural-gap-definition}
+\widetilde{\Delta} &= \lambda_d(\mathbf{J}) - \lambda_s(\mathbf{J}) \nonumber \\
+ &= x_1c(k_c+1)(-1 + \phi \Delta)),
+\end{align}
+where
+\begin{align}
+\Delta 
+%&= \frac{\lambda_d(\mathbf{M}) - \lambda_s(\mathbf{M})}{\lambda_d(\mathbf{C}) - \lambda_s(\mathbf{C})} \nonumber\\
+%&= \frac{m\lambda_d(\mathbf{G}_m) - m\lambda_s(\mathbf{G}_m)}{c\lambda_d(\mathbf{G}_c) - c\lambda_s(\mathbf{G}_c)} \nonumber\\
+&= \frac{m(k_m - \lambda_s(\mathbf{G}_m))}{c(k_c + 1)} \nonumber
+\end{align}
+is the ratio of the mutualistic spectral gap to the competitive spectral gap.
+The mutualistic spectral gap is the difference between the `dot' eigenvalue and the `semicircle' eigenvalue of the mutualistic interaction matrix $\mathbf{M}$;
+the competitive spectral gap is the difference between the `dot' eigenvalue and the `semicircle' eigenvalue of the competitive interaction matrix $\mathbf{C}$.
+
+If the spectral gap $\widetilde{\Delta} > 0$, i.e. the `dot' eigenvalue is larger than the `semicircle' eigenvalue (therefore also larger than all the eigenvalues in the semicircle), we refer to the `dot' eigenvalue dominating the eigenvalue distribution of the Jacobian matrix.
+If the spectral gap $\widetilde{\Delta} < 0$, i.e. the `semicircle' eigenvalue is larger than the `dot' eigenvalue the `dot' eigenvalue is `submerged' into the semicircle,
+and the `semicircle' eigenvalue dominates the eigenvalue distribution of the Jacobian matrix.
+
+Therefore, the largest eigenvalue of $\mathbf{J}$ is always the larger one between the `dot' eigenvalue and the `semicircle' eigenvalue, i.e. $\lambda_1(\mathbf{J}) = \mathrm{max}(\lambda_d(\mathbf{J}), \lambda_s(\mathbf{J}))$. 
+When the spectral gap is positive, the largest eigenvalue equal to the `dot' eigenvalue, and when negative, the `semicircle' eigenvalue dominates.
+
+Figure (\ref{fig:semicircle-dot-eigenvalue-dominate}) show an example for each case of the  semicircle and dot eigenvalues dominating: the solid red point indicates the single `dot' eigenvalue, the dashed red indicates the semicircle eigenvalue.
+%{\color{red} Should we add or replace solid points to represent the `dot' and `semicircle' eigenvalues rather than the dashed lines? }
+
+\begin{figure}[htbp]
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/dot-dominate-bipartite.eps}
+  {\centering(a) dot eigenvalue dominate\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle-dominate-mixture.eps}
+  {\centering(b) semicircle eigenvalue dominate\par}
+\end{minipage}
+\caption{Example of dot eigenvalue or semicircle eigenvalue dominance. A numerical calculation of the relevant system was made, with $n = 1000, s = 0, c = 1, m = 1$. The eigenvalues are shown as frequency against values by the black vertical bars. The red point indicates the calculated dot eigenvalues, the red dashed line indicates the semicircle eigenvalue from. 
+The solid red line indicates the predicted semicircle distribution 
+%using Eq. \ref{eq:semicircle-distribution}.
+} 
+{\color{red} I'm generating the new figure as you required : PLEASE ADD SOLID RED POINT FOR THE DOT AND DASHED RED LINE FOR THE SEMI-CIRCLE EIGENVALUES.}
+\label{fig:semicircle-dot-eigenvalue-dominate}
+\end{figure}
+
+
+
+\paragraph*{4)} The Jacobian matrix for the nonstructural model is of course symmetric, i.e. $\mathbf{J} = \mathbf{J}^\top$.
+In this case, the variance--covariance matrix $\mathbf{V}$ with stochastic dynamics (Equation \ref{eq:mou-lyapunov}) simplifies to
+\begin{align} \label{eq:mou-covariance-symmetric}
+%2 \mathbf{V} \mathbf{J} &= - \mathrm{diag}(\sigma^2)  \nonumber\\ %\mathrm{diag}(X^*) 
+\mathbf{V} &= - \frac{\sigma^2}{2} \mathbf{J}^{-1}
+\end{align}
+
+
+\paragraph*{New findings 1}
+May's theoretical theorem\cite{may_stability_2001} and its recent extension\cite{allesina_stability_2012} that biodiversity decreases the local stability contradicts with the biodiversity in real ecological communities.
+A recent study \cite{mougi_diversity_2012} proposed that multiple interaction types might cause the positive biodiversity and (local) stability relationship(biodiversity increases local stability), but their results was questioned\cite{suweis_disentangling_2013}.
+
+We here show that when $h>0$, there are some parameter ranges, where the positive biodiversity and (local) stability relationship emerge.
+The analysis based on the partial derivative of `dot' eigenvalue (Equation \ref{eq:nonstructural-dot-definition}) with respect to parameter $\rho$.
+The parameter $\rho$ increase with biodiversity(species number $n$).
+{\color{red} this new finding will be added after all. 
+This finding is still not guaranteed! The `semicircle' eigenvalue has to be evaluated as well.}
+
+\paragraph*{New findings 2}
+We prove that when the spectral gap is positive where the `dot' eigenvalue dominates the eigenvalues of the Jacobian matrix, 
+the dynamics of the nonstructural model can be \textit{qualitatively} described by the scalar dynamic equation:
+\begin{align} \label{eq:nonstructrual-dynamic-model}
+\frac{dx}{dt} &= x(r - sx -k_ccx + \frac{k_m m x}{1+hk_m m x}) = f(x,P), \;\; x \ge 0, 
+\end{align}
+where $P = [r, h, s, k_c, c, k_m, m]$ is the parameter set.
+
+First we give its parametric portrait by partitioning its parameter space
+according to three free parameters : the handling time $h$, the intrinsic growth rate $r$, the ratio of the total mutualistic strength to the total competitive strength $\rho = \frac{k_mm}{s+k_cc}$.
+%Each partitioned parameter subset is composed of those points for which the system has phase portraits that are topologically equivalent to each other.
+Each partitioned parameter subset is called a \textit{stratum} \cite{kuznetsov_elements_2013}P61.
+
+%We first divide the parameter space by handling time $h$.
+
+When the handling time is equal to 0 ($h = 0$), the parameter space can be further divided into three strata:
+$H_{00}:\{h = 0, r > 0, \rho < 1\}$ in which the system is globally stable at a feasible equilibrium $\frac{r}{s+k_cc - k_mm}$;
+$H_{01}:\{h = 0, r <= 0\}$ in which the system is global stable at zero;
+$H_{02}:\{h = 0, r > 0, \rho > 1\}$ in which the system is globally unstable where the species abundance will increase infinitely.
+(see Figure \ref{fig:nonstructural-bifurcation-diagram}a)
+
+When the handling time is larger than 0 ($h > 0$), the parameter space can be further divided into three strata: %by whether in strong mutualism regime or in weak mutualism regime
+$H_{10}:\{h > 0, r > 0\}$ in which the system is globally stable at a feasible equilibrium calculated by equation \ref{eq:nonstructural-x1};
+$H_{11}:\{h > 0, (\rho < 1, r <= 0) \lor (\rho > 1, r < r_{\mathrm{min}}) \}$ in which the system is globally stable at zero;
+$H_{12}:\{h > 0, \rho > 1, r <= 0,  r > r_{\mathrm{min}} \}$ in which the system has two alternative local stable states (one with positive abundance, the other with zero abundance), separated by an unstable equilibrium that marks the border between the `basins of attraction' of these two local stable states.
+(see Figure \ref{fig:nonstructural-bifurcation-diagram}b).
+$\{\rho > 1, r = r_{\mathrm{min}}\}$ is the edge between $H_{12}$ and $H_{11}$, $\{\rho > 1, r = 0\}$ is the edge between $H_{12}$ and $H_{10}$,
+These two edges form the border of parameter stratum $H_{12}$  as shown by the blue lines in Figure \ref{fig:nonstructural-bifurcation-diagram}b.
+
+The parameter subset of $H_{12}$ give a clear condition of alternative stable states in mutualistic ecosystems\cite{kefi_when_2016}: 
+1) a kind of nonlinear functional response reflected by the saturating coefficient handling time $h>0$, 2) mutualistic interactions that are stronger than competitive interactions $\rho>1$, and 3) a proper negative intrinsic growth rate $r <= 0,  r > r_{\mathrm{min}}$.
+%Together, these three conditions answer the question: `When can positive interactions cause alternative stable states in ecosystems?'.
+
+Next we explore the characteristic phase portraits of the parameter stratum $H_{12}$,
+which can be described by the cusp structure in catastrophe theory \cite{zeeman_catastrophe_1979} (Zeeman, Catastrophe Theory).
+(see Figure \ref{fig:nonstructural-bifurcation-diagram}c).
+
+So-called 'cusp catastrophes' have two control parameters $r, \rho$ and one state variable $x$.
+The plane composed of $r, \rho$ is referred to as the control space.
+The equilibrium states of variable $x$ constitute the equilibrium (state) space.
+The equilibrium surface comprises three sheets: (i) the upper sheet composed of local stable equilibrium points where species abundance is calculated by equation (\ref{eq:nonstructural-x1}); (ii) the lower sheet also composed of local stable equilibrium points where species abundance is zero $x = 0$; and (iii) the middle sheet composed of unstable equilibrium points where species abundance is calculated by Equation (\ref{eq:nonstructural-x1}).
+The middle unstable sheet forms the border between two `basins of attraction' of the upper stable sheet and the lower stable sheet, with state variables attracted to the upper (lower) sheet when above (below) the middle sheet.
+
+The intersection between the upper sheet and the middle sheet and the intersection between the middle sheet and the lower sheet, 
+are where critical transitions happen,
+and are referred to as fold curves (Red curves in Figure \ref{fig:nonstructural-bifurcation-diagram}c).
+When the two fold curves are projected back onto the plane of the control surface, the result is a cusp-shaped curve,
+as shown by the blue curves in Figure \ref{fig:nonstructural-bifurcation-diagram}b which form the border of parameter stratum $H_{12}$
+%For this reason our minimal model is a kind of cusp catastrophe.
+
+%The cusp on the control surface is call the bifurcation set of the cusp catastrophe, and it defines the threshold where sudden collapses can take place(Green curves in Figure).
+
+Next we describe the conditions for critical transitions on the fold curves.
+
+Suppose the system moves away from the parameter stratum $H_{10}$ and enters into $H_{12}$ because of parameter changes,
+it will move across the edge between $H_{10}$ and $H_{12}$($\{\rho > 1, r = 0\}$),
+here no abrupt (critical) change of the equilibrium state happens,
+the equilibrium state varies smoothly and continuously to the upper sheet of the cusp.
+But, under further change of parameters (such as decreasing $r$ and/or $\rho$) the system passes out of the cusp and enters in to parameter stratum $H_{11}$, and
+the system will move across the fold curve between the upper sheet and the middle sheet - 
+here critical transitions of the equilibrium state occur.
+The equilibrium state varies suddenly and abruptly from the upper sheet of the cusp to 0, the global stable equilibrium state of the system in parameter stratum $H_{11}$.
+
+Now in a reverse direction, suppose the system moves away from the parameter stratum $H_{11}$ and enters into $H_{12}$ (again because of change of parameters),
+it will move across the edge between $H_{11}$ and $H_{12}$($\{\rho > 1, r = r_{\mathrm{min}}\}$). Here, no change of the equilibrium state happens as
+the equilibrium state changes from the global stable state of $H_{11}$ to the lower sheet of the cusp catastrophe as both have the value of 0.
+But as further change of parameters (like increasing $r$ and/or $\rho$) leads the system to pass away from the cusp, and enter into the parameter stratum $H_{10}$,
+the system will move across the fold curve between the lower sheet and the middle sheet.
+Here, critical transitions of the equilibrium state happen,
+and the equilibrium state varies suddenly and abruptly from the lower sheet of the cusp to the global stable equilibrium state of the system in parameter stratum $H_{10}$.
+
+From the analysis of the above two paragraphs, we know that critical transitions from the upper sheet of the cusp catastrophe to the lower sheet happen when the system moves away from inside of parameter stratum $H_{12}$ and enters in to parameter stratum $H_{11}$,
+but do not happen when the system enters into parameter stratum $H_{12}$ while moving away from $H_{11}$,
+even though both changes in parameter strata move across the same edge between $H_{12}$ and $H_{11}$;
+the critical transitions from the lower sheet of the cusp catastrophe to the upper sheet happen when the system moves away from inside parameter stratum $H_{12}$ and enters into parameter stratum $H_{10}$,
+but does not happen when the system enters parameter stratum $H_{12}$ while moving away from $H_{10}$,
+although both changes of parameter strata move across the same edge between $H_{12}$ and $H_{10}$.
+Therefore whether or not the critical transitions happen depends not only on its current parameters and state, but also on its previous parameters and state.
+
+
+
+%As long as the state of the system remains outside the cusp, behavior(equilibrium state) varies smoothly and continuously as a function of the control parameters $r,m$.
+%Even on entering the cusp from the outside no abrupt change of the equilibrium state is observed.
+%Only when the control parameters $r,m$ pass away the cusp(bifurcation set) from the inside of the bifurcation set to the outside of the bifurcation set, a sudden collapse(catastrophic transition) from the upper sheet to the lower sheet or from the lower sheet to the upper sheet occurs.
+%Then the behavior of system(the equilibrium state) can only be predicted if we know both its present equilibrium state and its recent previous equilibrium states.
+
+This `memory effect'-like mechanism leads to hysteresis.
+The critical transitions from the upper sheet to the lower sheet happen at the edge between $H_{12}$ and $H_{11}$,
+while the critical transitions from the lower sheet to the upper sheet happen at the edge between $H_{12}$ and $H_{10}$.
+The extent of hysteresis can be measured by the distance between these two edges (the width of parameter stratum $H_{12}$). 
+The distance between two edges of $H_{12}$ is calculated as the absolute value of $r_{\mathrm{min}}$ in Equation (\ref{eq:rmin}).
+From this equation, we can calculate the partial derivative of the absolute value of $r_{\mathrm{min}}$ with respect to parameters $h$  and $\rho$ is negative and positive respectively.
+Thus the distance between two edges of $H_{12}$ is negatively proportional to the inverse square of handling time $h$, and is positively related to the relative mutualistic strength $\rho$.
+(As shown in Figure \ref{fig:nonstructural-bifurcation-diagram}e and \ref{fig:nonstructural-bifurcation-diagram}f)
+The stronger the mutualistic interactions and the greater the efficiency of resource handling, the wider the parameter stratum $H_{12}$, and therefore the extent the hysteresis.
+
+In ecology, the extent of hysteresis represents in some sense the degree of difficulty in recovering from a collapse ({\color{red}Need some reference papers in ecology?}).
+Our analysis shows that as the strength of mutualistic interactions and the resource handling efficiency increase (leading to a greater width of parameter stratum $H_{12}$), mutualistic systems can tolerate what can be interpreted as harsher conditions (decreased $r$). However, once such systems reach the point of collapse,
+recovery from the collapsed state is more difficult.
+Therefore, for nonlinear mutualistic systems, the properties which lead to the capability of withstanding harsher conditions before collapse occurs come at the cost of a greater difficulty in recovering from the collapse.
+
+
+\begin{figure}[htbp]
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-h0.pdf}
+  {\centering(a) Parametric Portrait ($h = 0$)\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-h1.pdf}
+  {\centering(b) Parametric Portrait ($h > 0$)\par}
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-3.eps}
+  {\centering(c) Cusp Bifurcation\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-2.pdf}
+  {\centering (d) Cusp Bifurcation ($s = 1, k_mm = 1.5, h = 0.3$)\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-fold-m.eps}
+  {\centering(e) Effect of mutualism strength $k_mm$ \\ on extent of hysteresis\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/nonstructural-bifurcation-fold-h.eps}
+  {\centering(f) Effect of handling time $h$ \\ on extent of hysteresis\par}
+\end{minipage}
+\caption{Bifurcation Diagram of the nonstructural model, including parametric portrait, cusp catastrophe, fold curves, hysteresis, etc. {\color{red} modify (a),(b),(c) change to $\rho$; modify T(.), change to $r_{\mathrm{min}}$} }
+\label{fig:nonstructural-bifurcation-diagram}
+\end{figure}
+
+
+\paragraph*{New finding 3}
+We argue that whether the `dot' eigenvalue or the `semicircle' eigenvalue dominates will lead to two different kinds of critical transitions (Recently, a similar claim in physical many-body system\cite{cubitt_undecidability_2015} 
+%and is intimately related to phase transitions: gapped and gapless systems exhibit, respectively, `non-critical' and `critical' behaviors in phase transitions.
+).
+As we decrease $r$, 
+both the `dot' eigenvalue and the `semicircle' eigenvalue increase, from negative to positive. Independent of which eignevalue reaches zero first, a bifurcation will occur, but the nature of this bifurcation will depend on which eigenvalue reaches zero first.
+The `dot' eigenvalue always reaches $0$ at $r_{min}$, %as shown above,
+thus if the `semicircle' eigenvalue reaches $0$ before $r$ decrease to $r_{min}$,
+it will determine the type of transition that occurs. We must therefore determine the conditions under which either the `dot' or the `semicircle' dominates.
+From the definition above, we can say that if the spectral gap is positive ($\widetilde{\Delta} > 0$),
+then the `dot' eigenvalue dominates;
+If the spectral gap is negative ($\widetilde{\Delta} < 0$),
+then the `semicircle' eigenvalue dominates;
+
+We could prove that the probability of the `dot' ('semicircle') eigenvalue dominating increases (decreases) with a new parameter $\alpha$,
+which is the ratio between the ratio of mutualistic spectral gap to competitive spectral gap $\Delta$ and the ratio of mutualistic strength to competitive strength $\rho$, i.e. $\alpha = \frac{\Delta}{\rho}$.
+
+Particularly, if $\alpha > \rho$, then the `dot' eigenvalue totally dominates in the parameter stratum of alternative stable states $H_{12}$ (Figure \ref{fig:dot-semicircle-examples-2}a); 
+if $1 < \alpha < \rho $, then the `semicircle' eigenvalue first dominates, then the `dot' eigenvalue dominates $r$ decreases in the parameter stratum of alternative stable states $H_{12}$(Figure \ref{fig:dot-semicircle-examples-2}b,c); 
+if $\alpha < 1$, then
+the `semicircle' eigenvalue totally dominates in the parameter stratum of alternative stable states $H_{12}$(Figure \ref{fig:dot-semicircle-examples-2}d).
+For the first and second cases, the bifurcation(critical transition) happens at $r_{\mathrm{min}}$, 
+for the last case, the bifurcation(critical transition) happens before $r$ decreases to $r_{\mathrm{min}}$ where the `semicircle' eigenvalue first reaches 0.
+
+\begin{figure}[htbp]
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/dot-semicircle-s05-km20.eps}
+  {\centering(a) $\lambda_d$ always larger than $\lambda_s$\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/dot-semicircle-s01-km20.eps}
+  {\centering(b) $\lambda_d$ catch up with and surpass $\lambda_s$ when $r$ decrease\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/dot-semicircle-s01-km12.eps}
+  {\centering(c) $\lambda_d$ catch up with and surpass $\lambda_s$ before $r$ decrease to $r_{min}$\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/dot-semicircle-s01-km5.eps}
+  {\centering(d) $\lambda_d$ can not catch up with $\lambda_s$ before $\lambda_s$ approach to $0$.\par}
+\end{minipage}
+\caption{Relation between the `dot' eigenvalue (red color) and the `semicircle' eigenvalue (blue color).}
+\label{fig:dot-semicircle-examples-2}
+\end{figure}
+
+The parameter $\alpha$ is a function of other parameters,
+so we could evaluate the effect of other parameters on the probability of the ‘dot’ (’semicircle’) eigenvalue dominating through $\alpha$.
+Particularly, the probability of ‘dot’ (or ‘semicircle’) eigenvalue dominating increases (or decreases) with the self-regulation $s$,
+decreases (or increases) with the competitive strength $c$,
+increases (or decreases) with the number of mutualistic interactions $k_m$,
+and has no relation with the mutualistic strength $m$.
+%species number $n$
+
+%One observation is that : 
+{\color{red}The below statement is guaranteed at the critical point where critical transitions happen, how to add this point to the below?}
+When the `dot' eigenvalue dominates, the eigenvector corresponding to the largest eigenvalue (the `dot' eigenvalue) is an identity vector $\mathbf{1}$,
+which mean the effect of external pressure on each species is the same,
+%\textit{may}
+thus causing similar trajectories, with all species populations collapsing simultaneously (we name this type of critical transition \textit{consistent} critical transitions).
+When the `semicircle' eigenvalue dominates, the eigenvector corresponding to the largest eigenvalue(the `semicircle' eigenvalue) has mixed negative and positive values,
+which mean the effect of external pressure on individual species are different in strengths or even in direction (sign),
+thus causing a range of trajectories under environmental pressure,
+with some species' abundances increasing while others decrease or even collapse (we name this type of critical transitions a \textit{splitting} critical transitions).
+As the difference between the `semicircle' eigenvalue and the `dot' eigenvalue increases (i.e., the spectral gap decreases),
+the heterogeneous effects become stronger than the consistent effects,
+and the probability of a splitting critical transition increases.
+
+
+Figure \ref{fig:nonstructural-semicircle-dominate} provides an example of transition from the consistent critical transition to the splitting critical transition because of the increase of difference between the `semicircle' eigenvalue and the `dot' eigenvalue (or the decrease of spectral gap).
+Figure \ref{fig:nonstructural-semicircle-dominate}a - \ref{fig:nonstructural-semicircle-dominate}e illustrate five different dynamics at its critical point where critical transition happens.
+All the parameters are same except the competitive strength $c$ which increases from Figure \ref{fig:nonstructural-semicircle-dominate}a to Figure \ref{fig:nonstructural-semicircle-dominate}e,
+that further causes a decrease of $\alpha$ and a decrease of spectral gap $\widetilde{\Delta}$,
+and consequently an increase in the strength of heterogeneous effects on species relative to the the strength of consistent effects,
+and eventually a splitting of species trajectories (Figure \ref{fig:nonstructural-semicircle-dominate}e). 
+In the inset figures, the relation between the values of elements of the eigenvector corresponding to the `semicircle' eigenvalue and the species abundances at the new equilibrium are shown, and as expected there is a positive correlation for those with abundances greater than zero.
+In Figure \ref{fig:nonstructural-semicircle-dominate}f,
+we use the same parameters with Figure \ref{fig:nonstructural-semicircle-dominate}e,
+in the literature of reducing $r$ cause the happening of critical transitions,
+to illustrate the splitting critical transitions.
+The dot is where the splitting critical transitions happen,
+and the transient dynamics at this critical point is illustrated by Figure \ref{fig:nonstructural-semicircle-dominate}e.
+{\color{red}ADD DOT ON Figure \ref{fig:nonstructural-semicircle-dominate}f.
+Should we remove one or two plots such as one in a/b/c and one in d/e?
+The trace from consistent to splitting critical transitions should be guaranteed.}
+
+
+\begin{figure}[htbp]
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_autonomy_one_c12.png}
+  {\centering(a) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_autonomy_one_c13.png}
+  {\centering(b) \par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_autonomy_one_c135.png}
+  {\centering(c) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_autonomy_one_c14.png}
+  {\centering(d) \par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_autonomy_one_c15.png}
+  {\centering(e) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/semicircle_dominate_press_c15_1.png}
+  {\centering(f) \par}
+\end{minipage}
+\caption{Examples of the `semicircle' eigenvalue totally dominates.}
+\label{fig:nonstructural-semicircle-dominate}
+\end{figure}
+
+\paragraph*{New findings 4}
+We connect several temporal stability measures($V^c, V^s, \eta$) 
+and further empirical signals of critical transitions with our definitions of `dot' eigenvalue, `semicircle' eigenvalue and spectral gap,
+and pave the way for mining the inner properties that drive the happening of critical transitions rather than only its empirical signals.
+
+Equation \ref{eq:mou-covariance-symmetric} connects the Jacobian matrix for deterministic dynamics $\mathbf{J}$ and the variance - covariance matrix for stochastic dynamics $\mathbf{V}$ to each other.
+Thus we could define he variance of total abundance of $n$ species $V^c$, the sum of variances of $n$ individual species $V^s$ and the asynchrony among species $\eta$ as :
+\begin{align} \label{eq:nonstructural-deterministic-stochastic}
+V^c &= \sum_{ij}V_{ij} = -  \frac{\sigma^2}{2} \sum_{i} \frac{1}{\lambda_d(\mathbf{J})} = -  \frac{\sigma^2}{2} \frac{n}{\lambda_d(\mathbf{J})} \nonumber\\
+V^s &= \sum_{i}V_{ii} = -  \frac{\sigma^2}{2} \sum_{i} \frac{1}{\lambda_i(\mathbf{J})} \nonumber\\
+\eta &= \frac{V^s}{V^c} = \frac{1}{n} \sum_{i} \frac{\lambda_d(\mathbf{J})}{\lambda_i(\mathbf{J})} 
+\end{align}
+
+These equations show that:
+1) The variance of total abundance of $n$ species $V^c$ is determined fully by the inverse of the `dot' eigenvalue of the Jacobian matrix and the environmental fluctuations($\sigma$).
+2) The sum of variances of $n$ individual species is determined by the inverse of all eigenvalues of the Jacobian matrix and the environmental fluctuations($\sigma$).
+3) The asynchrony among species $\eta$ is heavily affected by the spectral gap $\widetilde{\Delta}$ of the Jacobian matrix.
+When the spectral gap $\widetilde{\Delta} = \lambda_d(\mathbf{J}) - \lambda_s(\mathbf{J})$ increases,
+the distance between the `dot' eigenvalue and the other eigenvalues in the semicircle $\lambda_d(\mathbf{J}) - \lambda_i(\mathbf{J})$ have a high probability of also increasing,
+and the ratio of the `dot' eigenvalue to the other eigenvalues in the semicircle $\frac{\lambda_d(\mathbf{J})}{\lambda_i(\mathbf{J})}$ have high probabilities of decreasing (note that this is because all the eigenvalues are negative),
+thus the asynchrony among species $\eta$ also decrease (the synchronization among species increases).
+
+Besides working as measurements of temporal stability,
+the above defined three measurements $V^c, V^s, \eta$ could also be used as empirical signals for approaching critical transitions in modeled and real ecological systems \cite{scheffer_early-warning_2009,dakos_methods_2012,carpenter_early_2011,dakos_critical_2014}.
+Thus we could further connect our definitions of `dot' eigenvalue, `semicircle' eigenvalue and spectral gap with the empirical signals of critical transitions.
+
+First the total variance $V^c$ increases along with the increase of $\lambda_d$, particularly as the `dot' eigenvalue approaches close to 0, the total variance increase sharply since it is proportional to the inverse of the `dot' eigenvalue, and the system as a whole becomes very sensitive to environmental fluctuations.
+This is illustrated by Figure \ref{fig:sde_covariance}f for $h>0$ and Figure \ref{fig:sde_covariance_h0}b for $h = 0$.
+
+However, there is another more interesting signal - 
+the increase of derivative of the total variance rather than the increase of magnitude of the total variance.
+The increasing of derivative of the total variance $V^c$ is caused by the derivate of $\lambda_d$ increasing as the critical point is approached (Figure \ref{fig:sde_covariance}c).
+As an explanatory example, we compare the transient simulation where $h > 0$ and $h = 0$.
+When $h > 0$, the non-linear factor causes the derivative of $\lambda_d$ to increase when the system approaches its critical point,
+which further causes the increase of the derivative of $V^c$,
+since the total variance $V^c$ is mainly determined by the `dot' eigenvalue $\lambda_d$.
+(Figure \ref{fig:sde_covariance}g)
+However when $h = 0$, the derivative of $\lambda_d$ is constant, hence does not change when the system comes close to its critical point,
+and although causes a linear increase of $V^c$,
+the derivative of $V^c$ has no clear trend.
+(Figure \ref{fig:sde_covariance_h0}c)
+
+Thus the derivative of the total variance could work as a stronger signal of critical transitions, than the magnitude of the total variance.
+
+
+{\color{red}(here represented by fluctuations in $r$. in our stochastic dynamics, the environmental fluctuations is reflect by absolute growth rate, not the per capita growth rate $r$. We may just remove this clause.)}
+
+
+Second the asynchrony among species $\eta$ decreases (the synchronization among species increases). This is caused by the increase of the spectral gap of the Jacobian when $r$ decreases. {\color{red}difference between $h=0$ and $h>0$ ?}
+
+{\color{red} should we keep or delete the self-variance, it has a similar behavior with the total variance, but it can not be attributed to the `semicircle' eigenvalue, can only be attributed to the average of the bulk of eigenvalues.}
+
+{\color{red} should we remove the change of attractor basin? it has no relation with the stochastic dynamics and the empirical signal. Or may put it other place?}
+
+\begin{figure}[htbp]
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient.eps}
+  {\centering(a) Transient simulation \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_segment.eps}
+  {\centering(b) A segment\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/derivative_of_dot_eigenvalue_2.eps}
+  {\centering(c) Partial derivative of `dot' eigenvalue with $r$\par}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_Jshadow.eps}
+  {\centering(d) dot, semicircle and their gap \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_stationary.eps}
+  {\centering(e) total and self variance, asynchrony\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_Vc.eps}
+  {\centering(f) total variance  \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_Vc_deriv.eps}
+  {\centering(g) Derivative of total variance\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_Vs.eps}
+  {\centering(h) self variance  \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_Vs_deriv.eps}
+  {\centering(i) Derivative of self variance\par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_transient_eta.eps}
+  {\centering(j) Asynchrony\par}
+\end{minipage}
+\caption{$h > 0$. {\color{red}Should add autocorrelation} }
+\label{fig:sde_covariance}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{minipage}{0.45\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_h0_transient.eps}
+  {\centering(a) Transient simulation \par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_h0_transient_Vc.eps}
+  {\centering(b) total variance  \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_h0_transient_Vc_deriv.eps}
+  {\centering(c) Derivative of total variance\par}
+\end{minipage}
+\vfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_h0_transient_Vs.eps}
+  {\centering(d) self variance  \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/sde_covariance/sde_covariance_h0_transient_Vs_deriv.eps}
+  {\centering(e) Derivative of self variance\par}
+\end{minipage}
+\caption{$h = 0$. {\color{red}Should add autocorrelation. Add the asynchrony.}}
+\label{fig:sde_covariance_h0}
+\end{figure}
+
+\textbf{The above findings are in the nonstructural model, the next finding is about the effect of heterogeneity.}
+
+\paragraph*{New findings 5}
+Heterogeneity of ecological interactions is an important factor in ecological dynamics, and in the case of mutualistic ecological networks it is strongly correlated to nestedness \cite{jonhson_factors_2013}. In our nonstructural model, all species have the same number of mutualistic interactions, $k_m$.
+In this section, we release this restriction, and incorporate two new parameters, and evaluate their effect on the stability and critical transitions of mutualistic systems.
+
+The first new parameter is the heterogeneity of the number of mutualistic interactions between species.
+Suppose the vector of number of mutualistic interactions of species is $\mathbf{k}_m$,
+then its heterogeneity is defined as:
+\begin{align}
+H(\mathbf{G}_m) = \frac{\langle k_m^2 \rangle}{\langle k_m \rangle ^2},
+\end{align} 
+where $\langle k_m^2 \rangle$ is the mean of square of number of mutualistic interactions of species, $\langle k_m \rangle ^2$ is the square of the mean of number of mutualistic interactions of species.
+
+The heterogeneity of mutualistic interactions is implemented by a link rewiring algorithm,
+which generates a sequence of graphs which have increasingly higher degree heterogeneity, while at the same time keeping the average node degree constant.
+(SI)
+%We first initialize a random $k_m$-regular bipartite graph, 
+%then randomly chose a link between two groups; we then try to rewire this link to a random new species if this new species has more links.
+%More specifically: we choose a link $(i,j)$, and then randomly choose a new species $k$; if species $k$ has more mutualistic interactions than species $j$, then the link $(i,j)$ is removed and the new link $(i,k)$ is added, otherwise, we try to chose another new species, and repeat the above procedure until the failed attempts reach some predefined limit.
+
+Suppose a nonstructural model is in its stable feasible equilibrium where all species have the same species abundance $x^*$.
+The incorporation of degree heterogeneity then causes differences among species abundances, with some abundance increasing because of more mutualistic interactions, whilst others decrease in abundance because of fewer mutualistic interactions.
+Figure \ref{fig:degree-hetero-degrees-abundances} provides two examples of the relationship between the number of mutualistic interactions and the equilibrium abundance of species.
+As shown, the species with more mutualistic interactions always have higher abundances than the species with fewer mutualistic interactions;
+however the form of this positive correlation among numbers of mutualistic interactions and abundances of species changes according to the values of other parameters such as $\rho$, $h$ and $r$.(Figure \ref{fig:degree-hetero-degrees-abundances}a is with small $\rho<<1$ and $h=0.05$, where increase of number of mutualistic interactions \textbf{strongly} increase its abundance; Figure \ref{fig:degree-hetero-degrees-abundances}b is with larger $\rho>1$ and $h=0.8$, where increase of number of mutualistic interactions only \textbf{weakly} increase its abundance;)
+This feature causes that whether heterogeneity increase or decrease the total abundance depends on the values of $\rho$, $h$ and $r$.
+Particularly, as shown in Figure \ref{fig:degree-hetero-abundance}, there is a critical $r$ value for each $\rho$ and $h$ combination, that when exceeded, the degree heterogeneity decreases the total abundance; when $r$ is less than this particular value, the degree heterogeneity increase the total abundance.
+If both $\rho$ and $h$ are small (the top left subplot in the Figure),
+this critical $r$ value may be infinite,
+but the increase of any one of $\rho$ and $h$ will decrease this critical $r$ value, thus enlarging the parameter space where degree heterogeneity decrease total abundance.
+The results show that heterogeneity increases total abundance\cite{suweis_emergence_2013} is only satisfied in the case that the system is in weak regime and handling time is very small.
+
+\begin{figure}[htbp]
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_degrees_abundances_1.eps}
+  {\centering(a) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_degrees_abundances_2.eps}
+  {\centering(b) \par}
+\end{minipage}
+\caption{Relation between mutualistic interaction numbers and the equilibrium abundances of species.}
+\label{fig:degree-hetero-degrees-abundances}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{minipage}{0.22\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_abundance_m01.eps}
+\end{minipage}
+\hfill
+\begin{minipage}{0.22\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_abundance_m02.eps}
+\end{minipage}
+\hfill
+\begin{minipage}{0.22\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_abundance_m04.eps}
+\end{minipage}
+\hfill
+\begin{minipage}{0.22\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_abundance_m08.eps}
+\end{minipage}
+\caption{Relationship between degree heterogeneity and the total abundance.
+There are (5 $\times$ 4) subplots. Five rows are distinguished by $h \in [0.05, 0.1, 0.2, 0.4, 0.8]$, Four columns are distinguished by $m \in [0.1,0.2,0.4,0.8]$(All the other parameters have the same value $n = 100, s = 1, c = 0.002, k_m = 5$, thus have corresponding $\rho \in [0.46,0.91,1.82,3.64]$, the former two $\rho$ values are less than 1, the later two $\rho$ values are larger than 1.
+The x-axis of each subplot is the intrinsic growth rate $r$, and the y-axis is the total abundance. The colors represent the degree heterogeneity({\color{red}for the clear of visualization,we do not show colorbar here, should be added finally}).)}
+\label{fig:degree-hetero-abundance}
+\end{figure}
+
+Although the degree heterogeneity increases the total species abundance in some parameter ranges,
+at the same time it consistently increases the deviations among species abundances,
+and the abundance of the rarest species consistently decreases with the degree heterogeneity.
+(However an interesting exception exists, which is when the degree heterogeneity increases to very high values, it increase the abundance of the rarest species. please see
+Figure \ref{fig:degree-hetero-minimal-abundance}a)
+When the degree heterogeneity causes the abundance of the rarest species decrease to zero,
+the first extinction happens and the feasibility(defined as all species have positive abundances\cite{saavedra_nested_2016}) disappears.
+The abundance of the rarest species is directly linked to (have strong negative correlation with) the largest eigenvalue of the Jacobian matrix (Figure \ref{fig:degree-hetero-minimal-abundance}b), conforming to the results in \cite{suweis_emergence_2013}.
+This is to say, the degree heterogeneity decreases the abundance of the rarest species,
+and this then leads to an increase of the largest eigenvalue of the Jacobian matrix (i.e. lower resilience) (Figure \ref{fig:degree-hetero-minimal-abundance}c). 
+%{\color{red} 
+%(Figure about the first decrease then increase of the abundance of the rarest species along with the degree heterogeneity.
+%Figure about the first increase then decrease of the largest eigenvalue of the Jacobian matrix along with the degree heterogeneity.  
+%Figure about the strong negative correlation between the abundance of the rarest species and the largest eigenvalue of the Jacobian matrix.
+%Please see Figure \ref{fig:degree-hetero-minimal-abundance})
+%}
+
+\begin{figure}[htbp]
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_minimal_abundance_1.eps}
+  {\centering(a) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_minimal_abundance_3.eps}
+  {\centering(b) \par}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_minimal_abundance_2.eps}
+  {\centering(c) \par}
+\end{minipage}
+\caption{ Relationship between (a) the degree heterogeneity and the abundance of the rarest species, (b) the abundance of the rarest species and the largest eigenvalue of the Jacobian matrix, (c) the degree heterogeneity and the largest eigenvalue of the Jacobian matrix. {\color{red}a smooth line should be added.} }
+\label{fig:degree-hetero-minimal-abundance}
+\end{figure}
+
+However the above effect of degree heterogeneity on the largest eigenvalue (resilience) is only from one aspect.
+As shown in the equation of the Jacobian matrix (equation \ref{eq:jacobian}),
+the Jacobian matrix is the multiplication of two matrices:
+the first is a diagonal matrix formed from the vector of species abundances, which is the first path of the effect of degree heterogeneity as shown above (through its effect on species abundances); the second matrix is the shadow Jacobian which is the second path of the effect of degree heterogeneity (through its effect on the largest eigenvalue of the mutualistic adjacency matrix $\mathbf{G}_m$, the mutualistic interaction matrix $\widetilde{\mathbf{M}}$, and the shadow Jacobian matrix $\widetilde{\mathbf{J}}$).
+
+Thus although the degree heterogeneity increases the largest eigenvalue of Jacobian matrix by decreasing the abundance of the rarest species (the diagonal matrix of species abundances),
+the degree heterogeneity at the same time also decrease the largest eigenvalue of $\widetilde{\mathbf{M}}$ and $\widetilde{\mathbf{J}}$. This leads to the result that 
+although the degree heterogeneity increases the possibility of the first extinction (with exception of when degree heterogeneity is very high),
+subsequent extinct events are far less frequent and slower for more heterogeneous mutualistic systems (networks). This is caused by the greater resilience of the shadow Jacobian matrix.
+
+\begin{figure}[htbp]
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_M_lambda1.eps}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_degree_m_tilde.eps}
+\end{minipage}
+\vfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_M_tilde_lambda1.eps}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_Jshadow_lambda1.eps}
+\end{minipage}
+\caption{Relationship between degree heterogeneity and the eigenvalues of the mutualistic adjacency matrix $\mathbf{G}_m$, the mutualistic interaction matrix $\widetilde{\mathbf{M}}$, and the shadow Jacobian matrix $\widetilde{\mathbf{J}}$.
+The degree heterogeneity is illustrated by colors.}
+\label{fig:degree-hetero-Jshadow-lambda1}
+\end{figure}
+
+Let us explore the path of the effect on the shadow Jacobian in detail.
+Figure \ref{fig:degree-hetero-Jshadow-lambda1} shows relevant numerical data.
+
+As shown in the first subplot, the degree heterogeneity consistently increases the largest eigenvalue of the mutualistic adjacency matrix $\mathbf{G}_m$ independent with the values of $r$ \cite{allesina_stability_2012}.
+Since the mutualistic interaction matrix at equilibrium is determined by the multiplication of a diagonal matrix formed from a vector $\boldsymbol{\phi}$ which reflects the effect of nonlinear functional factor $h$, and the mutualistic adjacency matrix $\widetilde{\mathbf{M}} = \mathrm{diag}(\boldsymbol{\phi}) \cdot m\mathbf{G}_m$,
+then the distribution of vector $\boldsymbol{\phi}$ will influence the eigenvalues of $\widetilde{\mathbf{M}}$.
+As shown in the second subplot, 
+the $\phi_i$ of species $i$ has an inverse-square relationship to the number of mutualistic interactions $k_{mi}$ of species $i$.
+%the inversely proportional to the square of the equilibrium abundances of its mutualistic interacting species.
+(we expect that the eigenvalues of a matrix created by multiplication of a diagonal matrix and a symmetric matrix will be narrowed if the diagonal vector is {\color{red}has an inverse-square relationship} with the row sums of the symmetric matrix.)
+Since the vector $\boldsymbol{\phi}$ has an inverse-square relationship with $\mathbf{k}_m$ (see Equation \ref{eq:phi}) which is the row sums of $\mathbf{G}_m$,
+then the eigenvalues of $\widetilde{\mathbf{M}}$ have a high probability of being narrowed; therefore the effect of increasing degree heterogeneity on the largest eigenvalue of $\mathbf{G}_m$ shown in the first subplot,
+will have high probability to be reversed with the decrease of degree heterogeneity on the largest eigenvalue of $\widetilde{\mathbf{M}}$, as shown in the third subplot.
+The fourth subplot shows the effect of degree heterogeneity on $\widetilde{\mathbf{J}}$, which is qualitatively the same as $\widetilde{\mathbf{M}}$, since $\widetilde{\mathbf{J}} = \mathbf{C} + \widetilde{\mathbf{M}}$ and $\mathbf{C}$ is a fully two-blocks matrix.
+
+The solid black dot symbols in the first, third and fourth subplots indicates where the FIRST extinction happens, as the largest eigenvalue of Jacobian matrix reaches 0, which is in turn caused by the minimal abundance reaching 0.
+As shown in the fourth subplot, when the FIRST extinction happens, there remains a negative relationship between the degree heterogeneity and the corresponding largest eigenvalue of the shadow Jacobian (more Negative with increased degree heterogeneity). When the largest eigenvalue of the shadow Jacobian reaches 0, the total collapse of all species happens, as shown by the dashed line in the fourth subplot. 
+Thus the degree heterogeneity increases the distance between the FIRST extinction and the total collapse of the remaining species.
+
+In summary, although the degree heterogeneity INCREASES the largest eigenvalue of the Jacobian matrix, by decreasing the minimal abundance (of the rarest species), leading to an earlier FIRST extinction (of the rarest species), it simultaneously decreases the largest eigenvalue of the shadow Jacobian matrix, leading to a later total collapse of the remaining species.
+
+Such effects of degree heterogeneity (earlier first extinction while later total extinction) also lead to the complex effects on the persistence(which is defined as the number (proportion) of surviving species, in the range between the first extinction(100\%) and the total extinction(0\%) ).
+This complex effect is reflected that both the case of degree heterogeneity increasing and decreasing persistence can exist,
+depending on the values of $r$, $\rho$ and $h$ (Figure \ref{fig:degree-hetero-persistence}).
+In paper \cite{bastolla_architecture_2009}, they focus on weak mutualism where $\rho$ and $h$ are both small and $r$ is positive, this could correspond to the first subplot(or the right part of second subplot) in Figure \ref{fig:degree-hetero-persistence} where heterogeneity has high probability to increase persistence;
+In paper \cite{james_disentangling_2012}, part of their simulation use the  obligate mutualism(so $r<0$) and no competition($c=0$) and $m$ is larger than $s$, thus $\rho>1$ is in strong mutualism, 
+this could correspond to the left part of third or fourth subplot in Figure \ref{fig:degree-hetero-persistence} where heterogeneity has high probability to decrease persistence; 
+Therefore our results could solve the contradiction that degree heterogeneity increases \cite{bastolla_architecture_2009} or decreases \cite{james_disentangling_2012,thebault_stability_2010} persistence. 
+
+\begin{figure}[htbp]
+\begin{minipage}{0.9\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_persistence_h005_1.eps}
+\end{minipage}
+\vfill
+\begin{minipage}{0.9\linewidth}
+  \includegraphics[width=\linewidth]{depend/degree_hetero/degree_hetero_persistence_h005_2.eps}
+\end{minipage}
+\caption{Relationship between degree heterogeneity and persistence.
+Four subplots correspond to $m \in [0.1,0.2,0.4,0.8]$. All the other parameters have the same value $n = 100, s = 1, c = 0.002, k_m = 5$ and $h = 0.05$, thus have corresponding $\rho \in [0.46,0.91,1.82,3.64]$, the former two $\rho$ values are less than 1, the later two $\rho$ values are larger than 1.
+The x-axis of each subplot is the intrinsic growth rate $r$, and the y-axis is the persistence. The colors represent the degree heterogeneity({\color{red}for the clear of visualization,we do not show colorbar here, should be added finally}).)}
+\label{fig:degree-hetero-persistence}
+\end{figure}
+
+%Along with the continuous increase of degree heterogeneity, will cause more species extinct, and here the number (proportion) of surviving species is defined as the `persistence' of the system. Until all species extinct.
+
+In summary,
+for the effects of degree heterogeneity:
+1) whether heterogeneity increase or decrease the total abundance depends on the values of $\rho$, $h$ and $r$, previous result that heterogeneity increase total abundance is only a specific case;
+2) although the degree heterogeneity INCREASES the largest eigenvalue of the Jacobian matrix, by decreasing the minimal abundance (of the rarest species), leading to an earlier FIRST extinction (of the rarest species), it simultaneously decreases the largest eigenvalue of the shadow Jacobian matrix, leading to a later total collapse of the remaining species.
+3) both the case of degree heterogeneity increasing and decreasing persistence can exist, depending on the values of $r$, $\rho$ and $h$, and solve a contradiction(heterogeneity increase or decrease persistence)
+
+
+
+\textbf{The second new parameter}, $\delta$, is the trade-off between the strength and number of mutualistic interactions, as previously explored in \cite{lever_sudden_2014,rohr_structural_2014,dakos_critical_2014,saavedra_nested_2016,saavedra_estimating_2013}.
+The mutualistic strengths are assigned by
+\begin{align} \label{eq:degree-hetero-tradeoff}
+% M_{ij} = \frac{m \cdot (\mathbf{G}_m)_{ij}}{k_{mi}^\delta} \;\;, \\
+ \mathbf{M} = \textrm{diag}(\mathbf{k}_m^{-\delta}) \cdot m\mathbf{G}_m
+\end{align}
+%where $(\mathbf{G}_m)_{ij}$ is the elements of the mutualistic adjacency matrix, $(\mathbf{G}_m)_{ij} = 1$ if species $i$ and $j$ mutualisticly interact and zero otherwise; $k_{mi}$ is the number of mutualistic interactions of species $i$, $m$ is the mean value of mutualistic strength, and $\delta$ corresponds to the mutualistic trade-off.
+The mutualistic trade-off $\delta$ modulates the extent to which a species that interacts with few other species does it strongly, whereas a species that interacts with many partners does it weakly.
+If $\delta = 0$, there are no trade-off between strength and number of mutualistic interactions, all mutualistic interactions have the same strength $m$ no matter if it belongs to a generalist species with many partners or a specialist species with few partners.
+If $\delta = 1$, the strength of mutualistic interactions are totally traded-off by the number of mutualistic interactions, that guarantee that all species have the same total mutualistic strength.
+It should be noted that: 
+%along with the increase of $\delta$, if we compute strengths of mutualistic interactions using equation \ref{eq:degree-hetero-tradeoff}, the total mutualistic strength will decrease with the increase of $\delta$ 
+%(such as: when $\delta=0$, the total mutualistic strength is $\sum M_{ij} = nm \langle k_m \rangle$, while when $\delta$ increase to $1$, the total mutualistic strength decreases to $\sum M_{ij} = nm $).
+in order to exclude the possible influence of changes of the total mutualistic strength,
+we multiply every mutualistic interaction strength by a common scaling factor to keep the total mutualistic strength constant no matter the value of $\delta$.
+This allows us to isolate the influence of $\delta$.
+
+If the trade-off parameter $\delta = 1$ (that is, the total strength of mutualistic interactions for each species is the same, and shared equally over each species' connections) all species always have the same abundance at equilibrium no matter with the degree heterogeneity,
+and thus the effect of degree heterogeneity, through the distribution of species abundances, is canceled out (the first effect pathway of degree heterogeneity).
+
+Moreover, if the trade-off $\delta = 1$, the largest eigenvalue of the mutualistic interaction matrix $\mathbf{M}$ always equals that of the $k_m$-regular bipartite graph, independent of the degree heterogeneity.
+From the equation of the trade-off (equation \ref{eq:degree-hetero-tradeoff}),
+if the trade-off $\delta = 1$,
+\begin{align}
+ \mathbf{M} = \textrm{diag}(\frac{1}{\mathbf{k}_m}) \cdot m\mathbf{G}_m.
+\end{align} 
+Here the diagonal matrix is exactly linearly inversely correlated with the row sums of $\mathbf{G}_m$,
+therefore the increase of the largest eigenvalue of $\mathbf{G}_m$ is cancelled by the diagonal matrix,
+and the largest eigenvalue of the mutualistic interaction matrix $\mathbf{M}$ are always same irrespective of the degree heterogeneity. Thus the effect of degree heterogeneity, through its effect on the largest eigenvalue of $\mathbf{M}$, is nullified (the second path of effect of degree heterogeneity).
+
+Therefore, as we incorporate degree heterogeneity, if the trade-off is $\delta = 1$ the dynamics of mutualistic systems are qualitatively the same as the non-structural model. 
+%As already described above, the effect of degree heterogeneity when the trade-off $\delta = 0$ in the above subsections,
+when $0 < \delta < 1$, its effects are weakened compared with when $\delta = 0$ where we described in the above paragraphs.
+The detailed comparison between $\delta = 0$ and $\delta = 0.5$ is not displayed. 
+
+{\color{red} have deleted the Effect of degree heterogeneity on the spectral gap}
+
+\paragraph*{Release restriction 2}
+In the mathematical analysis of our nonstructural model, 
+we assume that all the parameters, including the intrinsic growth rates $\mathbf{r}$, the self-regulation $\mathbf{s}$, the competitive strength $\mathbf{c}$ and the mutualistic strength $\mathbf{m}$, have the same (mean) values for each species,
+and all species have the same initial value (we name the vector of initial values of species abundances $\mathbf{x}^0$).
+In this section we release the these restrictions and evaluate the effect of variation in these parameters on species abundances and eigenvalues of the Jacobian matrix.
+For all the parameters and initial values of species abundances,
+we assign a uniform distribution centered on its mean value used for the non-structural model.
+
+If all initial values of species abundances $\mathbf{x}^0$) lie in the basin of feasible stable equilibrium $x^*_1$,
+the system always converges to $x^*_1$;
+If they lie in the basin of unfeasible equilibrium $0$, the system always converges to $0$;
+If they lie across the boundary($x^*_2$) of two attracting basins, the system is possible to converge to either $x^*_1$ or $0$.
+(SI Figure \ref{fig:sensitivity-analysis-initial-values} )
+
+Incorporating variance for the intrinsic growth rates $\mathbf{r}$ results in a distribution of equilibrium species abundances centered on the feasible stable equilibrium abundance $x^*_1$ of the non-structural model,
+increases the largest eigenvalue of the Jacobian matrix and thus cause earlier happening of critical transitions,
+and increases the probability of the splitting type of critical transitions.
+(SI Figure \ref{fig:sensitivity-analysis-r-distribution})
+Incorporating variance for the mutualistic strength $\mathbf{m}$ has effects  similar with the intrinsic growth rates $\mathbf{r}$.
+(SI Figure \ref{fig:sensitivity-analysis-m-distribution})
+
+Incorporating variance for the self-regulation $\mathbf{s}$ interestingly results in a distribution of equilibrium species abundances with mean value \textbf{larger} than the feasible stable equilibrium abundance $x^*_1$ of the non-structural model,
+\textbf{decreases} the largest eigenvalue of the Jacobian matrix and thus cause \textbf{later} happening of critical transitions,
+and increases the probability of the splitting type of critical transitions.
+(SI Figure \ref{fig:sensitivity-analysis-s-distribution})
+
+\paragraph*{Release restriction 3}
+In addition with to the nonstructural model,
+we also analytically explored an extension of the nonstructural model which incorporated a more ecological realistic case that the number of species of two groups are different , i.e. $n_p \neq n_a$.
+We analytically solved the two possible equilibrium abundances for species in two groups
+(as a function of the intrinsic growth rates of two groups $r_1,r_2$,
+the self-regulation of two groups $s_1, s_2$,
+the total interspecies competitive interaction strength inside of each group respectively $C_1,C_2$,
+the total mutualistic interaction strength of species in group 2 on species in group 1 $M_{12}$,
+the total mutualistic interaction strength of species in group 1 on species in group 2 $M_{21}$,
+and the handling time $h$).
+We noted that this extension of the nonstructural model have more interesting features (please see a example of the phase portrait),
+but we leave the full exploration of the extension for the future work.
+
+
+\clearpage
+
+1. We incorporate and explore new stability measures : the `dot' eigenvalue, the `semicircle' eigenvalue and their difference(the spectral gap).
+When the `dot' eigenvalue dominate, we could analytically construct the bifurcation diagram and explore the alternative stable states, hysteresis and cusp catastrophes in mutualistic systems;
+The types of critical transitions is determined by whether the `dot' eigenvalue or the `semicirlce' eigenvalue dominates.
+
+2. We connect empirical signals of critical transitions with the the `dot' eigenvalue and the `semicircle' eigenvalue,
+
+3. we solve the contradict of heterogeneity effect on persistence and productivity.
+
+4. we explore the effect of heterogeneity not only on the first extinction, but also for the total extinction.
+
+We note that our framework can be further extended such as allow partial competitive interactions, incorporate exploitative interactions, or release three restrictions concurrently to explore correlations among these three features,
+and so on.
+
+%The previous researches, focus on partial aspects of the ecosystem. Some results contradict with each other, or separated with each other.
+%We here propose an analytical framework to unify and connect all the above stability definitions and the features effecting on them together, and explore inner mechanisms of stability in both deterministic and stochastic dynamics, and further of types of critical transitions in deterministic dynamic, and signals of critical transitions in stochastic dynamic.
+
+\begin{comment}
+
+\section{Stability measurements.} Define the `dot' eigenvalue, the `semicircle' eigenvalue and their difference (the spectral gap) based on the Jacobian matrix at a feasible equilibrium, for the deterministic dynamic.
+Define the total variance, the self-variance and the asynchrony among species based on the variance - covariance matrix at a stationary distribution, for the stochastic dynamic.
+Analytically correlate them together.
+
+\section{Inner mechanisms driving on stability measurements.}
+Analytically explore the inner mechanisms that determine the stability measurements:
+ratio of total mutualistic strength to total competitive strength,
+ratio of the mutualistic spectral gap to the competitive spectral gap,
+the ratio between the above two ratios,
+the non-linear factor --  handling time.
+
+\section{Effects of stability measurements.}
+The stability measurements determine the types of critical transitions in deterministic dynamic, and the signals of critical transitions in stochastic dynamic.
+
+\paragraph*{1.} For the deterministic dynamic, if the `dot' eigenvalue totally dominate the eigenvalue distribution, the bifurcation diagram, the parameter portrait, and the cusp catastrophe. 
+
+\paragraph*{2.} For the deterministic dynamic, if the `semicircle' eigenvalue totally dominate the eigenvalue distribution, a different kind of bifurcations emerges.
+
+\paragraph*{3.} For the stochastic dynamic, if the transient simulation. the derivative of the total variance $V^c$, which describes its change speed, is more meaningful as a signal of critical transitions, rather than the change magnitude of it.
+The increasing speed of increase of the total variance $V^c$ is caused by the derivate of $\lambda_d$ increase as the critical point approach.
+
+
+
+
+
+
+The `dot' eigenvalue is dominated by the total interaction strength of species, which may be no relation with the particular interaction structures among species.
+The `dot' eigenvalue determine the variance of the sum of species abundances.
+
+\cite{mccann_diversity-stability_2000}:
+Definitions of stability in ecology can be classified generally into two categories - stability definitions that are based on a system's dynamic stability, and stability definitions that are based on a system's ability to defy change(resilience and resistance).
+Despite the breadth of definitions, ecological theory has tended traditionally to rely on the assumption that a system is stable if, and only if, it is governed by stable equilibrium dynamics.
+However both in field and in laboratory experiments, experimentalists tend to use measures of variability as indices of a system's stability.
+This discontinuity between stability experiments and equilibrium-based theory has made it difficult to unite theory and experiment in the definitions of stability.
+The equilibrium-based stability definitions in ecological theory and the stochastic-process-based stability definitions in ecological experiments are still split with each other and are not connected inherently and analytically\cite{ives_estimating_2003}.
+
+\cite{ives_stability_2007}:
+For systems with alternative stable states, one concept of stability depends on the number of alternative stable states: More stable systems are those with fewer stable states.
+Another concept of stability, Holling's resilience\cite{holling_resilience_1973}, describes the ease with which systems can switch between alternative stable states, with more stable systems having higher barriers(and wider size of attraction basin) to switching.
+Alternative stable states occur when there are multiple stationary points that are locally but not globally stable.
+These alternative stable states are alternative species compositions in an ecosystem, they may occur with positive densities for all species, or positive densities for some species while zeros for other species, or even zeros for all species.
+
+Alternative stable states generate hysteresis. If structural changes occur in the equations governing the dynamics of a system that allow a shift from one domain of attraction to another, then a reversal of these structural changes will not necessarily lead to a return of the ecosystem to its original state.
+
+{Catastrophe Theory, Zeeman}:
+The underlying forces in nature(dynamics of systems) can be described by smooth surfaces of equilibrium; it is when the equilibrium breaks down that catastrophes occur.
+
+?The figure of local stability(resilience), resistance, structural stability, temporal stability?
+
+Multi-faceted Stability: \cite{harrison_stability_1979,ives_stability_2007,donohue_dimensionality_2013}
+Structural stable: \cite{rohr_structural_2014}
+\cite{may_stability_2001}: stochastic version of dynamic systems, structural stability.
+Catastrophe theory and cusp catastrophe: \cite{scheffer_catastrophic_2003,scheffer_catastrophic_2001}
+
+A bifurcation occurs when a small smooth change made to the parameter values (the bifurcation parameters) of a system causes a sudden `qualitative' topological change in its behavior.
+
+\end{comment}
+
+
+
+
+
+%\section{References}
+\bibliographystyle{depend/naturemagx}
+\bibliography{depend/library}
+
+
+\end{document}
