@@ -42,9 +42,9 @@ SimYuima <- R6Class('SimYuima',
       self$stepwise = stepwise
       self$state = 2
     },
-    simulate = function() {
+    sim = function() {
       cat('simulate SimYuima object, produce the output.')
-      self$refObj = simulate(self$refObj, true.parameter = self$params, xinit = self$xinit)
+      self$refObj = yuima::simulate(self$refObj, true.parameter = self$params, xinit = self$xinit)
     },
     get_out = function() {
       cat('Get the output of SimYuima object')

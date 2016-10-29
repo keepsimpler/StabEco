@@ -11,25 +11,26 @@ library(R6)
 SimObj <- R6Class('SimObj', 
   public = list(
     set_model = function() {
-      cat('Set model for the simulation.')
+      cat('Set model for SimObj object.\n')
     },
     set_times = function() {
-      cat('Set timesteps for the simulation.')
+      cat('Set timesteps for SimObj object.\n')
     },
-    set_init = function() {
-      cat('Set initial values for the simulation.')
+    set_init = function(xinit) {
+      cat('Set initial values for SimObj object.\n')
+      self$xinit = xinit
     },
     set_params = function() {
-      cat('Set parameters for the simulation.')
+      cat('Set parameters for SimObj object.\n')
     },
-    simulate = function() {
-      cat('Actually simulate, produce the output.')
+    sim = function() {
+      cat('Simulate for SimObj object, produce the output.\n')
     },
     get_out = function() {
-      cat('Get the output of simulation.')
+      cat('Get the output of SimObj object.\n')
     },
     initialize = function() {
-      cat('Initialize the SimObj object.')
+      cat('Initialize SimObj object.\n')
     },
 #  ),
 #  private = list(

@@ -6,7 +6,7 @@ numeric_derivative <- function(data, h) {
 
 #' @title get covariances within moving windows along a multivariate timeseries
 #' @param timeseries a numeric matrix of multivariate timeseries
-#' @param winsize window size expressed as percentage of the timeseries length (must be numeric between 0 and 100). Default is 50%.
+#' @param winsize window size expressed as percentage of the timeseries length (must be numeric between 0 and 100). Default is 50.
 #' @param type c('cov', 'cor', 'relative')
 #' @return a list of covariances measurements
 run_stats_multivariate <- function(timeseries, winsize = 50,
@@ -24,12 +24,13 @@ run_stats_multivariate <- function(timeseries, winsize = 50,
       covariance_matrix <- cor(data_of_window)
     else if (type == 'relative') {
       means <- apply(data_of_window, 2, mean)
+      covariance_matrix <- cov(data_of_window)
       covariance_matrix <-
         diag(1/means) %*% covariance_matrix %*% diag(1/means)
     }
     Vc <- sum(covariance_matrix)
-    Vs <- sum(diag(covariance_matrix))
-    asyn <- Vs / Vc
+    Vs <- sum(sqrt(diag(covariance_matrix)))^2
+    asyn <- Vc / Vs
     c(Vc = Vc, Vs = Vs, asyn = asyn)
   })
   list(Vc = covariances[1,], Vs = covariances[2,], asyn = covariances[3,])
@@ -73,7 +74,7 @@ runif2 <- function(n, mean, sd) {
 }
 
 #' @title transfer an incidence matrix to an adjacency matrix
-#' @param inc, an incidence matrix
+#' @param inc, an incidency matrix
 #' @return adj, an adiacency matrix
 inc_to_adj <- function(inc){
   p <- dim(inc)[1]  # number of Plants
@@ -84,27 +85,8 @@ inc_to_adj <- function(inc){
   adj <- adj + t(adj)  # the lower left sub-matrix is transpose of the incidence matrix
   return(adj)
 }
-
-#' @title estimate semicircle eigenvalue of a bipartite regular graph using alon-method, plus-twins-method, or an empirical method
-#' @param n, node number
-#' @param km, node degree
-estimate_semicircle_bipartite_regular <- function(n, km) {
-  threshold1 = (sqrt(2 * n - 3) + 1) / 2
-  threshold2 = n * (n - 2) / (2 * n + 12)
-  alon <- 2 * sqrt(km - 1)
-  plustwins <- 2 * sqrt(km * (n - 2 * km) / (n - 2))
-  plusone <- plustwins - km / (n / 2 - 1)
-  empirical <- n / 2 - km
-  if (km >= 2 && km < threshold1) { # using alon-method
-    est <- alon
-  }
-  else if (km >= threshold1 && km < threshold2) { # using plus-twins method
-    est <- plustwins
-  }
-  else if (km >= threshold2 && km <= n / 2 - 1) {
-    est <- empirical
-  }
-  list(est = est, threshold1 = threshold1, threshold2 = threshold2, alon = alon,
-       plustwins = plustwins, plusone = plusone, empirical = empirical)
+adj_to_inc <- function(adj, n1, n2) {
+  stopifnot(dim(adj)[1] == n1 + n2)
+  inc <- adj[1:n1, (n1 + 1):(n1 + n2)]
 }
 

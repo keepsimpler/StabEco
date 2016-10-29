@@ -15,16 +15,16 @@ library(yuima) # Simulation of Stochastic Differential Equaitons
 #' Sigma is the diffusion matrix, we assume it's a diagonal matrix
 #' W is a vector of Wiener process
 #' @examples 
-#'       refSim <- SimSLV2$new()
-#'       refSim$set_drift(n1 = 1, n2 = 2)
-#'       refSim$set_diffusion(n = 1+2)
-#'       refSim$set_variables(n = 1+2)
-#'       refSim$set_model()
-#'       refSim$set_times(steps = 1000, stepwise = 1)
-#'       refSim$set_init(xinit = c(1,1,1))
-#'       refSim$set_params(n1 = 1, n2 = 2, r = 1, delta = 0.001, s = 1, c = 0.01, h = 0.5, M = 1 * matrix(c(0, 1, 1, 1, 0, 0, 1, 0, 0), ncol = 3), sigma = 0.01)
-#'       refSim$simulate()
-#'       out = refSim$get_out()
+#'       simSLV2 <- SimSLV2$new()
+#'       simSLV2$set_drift(n1 = 1, n2 = 2)
+#'       simSLV2$set_diffusion(n = 1+2)
+#'       simSLV2$set_variables(n = 1+2)
+#'       simSLV2$set_model()
+#'       simSLV2$set_times(steps = 1000, stepwise = 1)
+#'       simSLV2$set_init(xinit = c(1,1,1))
+#'       simSLV2$set_params(n1 = 1, n2 = 2, r = 1, delta = 0.001, s = 1, c = 0.01, h = 0.5, M = 1 * matrix(c(0, 1, 1, 1, 0, 0, 1, 0, 0), ncol = 3), sigma = 0.01)
+#'       simSLV2$simulate()
+#'       out = simSLV2$get_out()
 
 SimSLV2 <- R6Class('SimSlv2',
   inherit = SimYuima,
@@ -35,25 +35,28 @@ SimSLV2 <- R6Class('SimSlv2',
       drift <- sapply(rows, function(row) {
         if (row <= n1) {
           # competitive block (1:n1, 1:n1)
-          competitive_interactions <- 1:n1
+          compet <- 1:n1
           # mutualistic block ( 1:n1, (n1+1):(n1+n2) )
-          mutualistic_interactions <- (n1+1):(n1+n2) 
+          mutual <- (n1+1):(n1+n2) 
         } else {
           # competitive block ( (n1+1):(n1+n2), (n1+1):(n1+n2) )
-          competitive_interactions <- (n1+1):(n1+n2) 
+          compet <- (n1+1):(n1+n2) 
           # mutualistic block ( (n1+1):(n1+n2), 1:n1 )
-          mutualistic_interactions <- 1:n1 
+          mutual <- 1:n1 
         }
-        if (length(competitive_interactions[-which(competitive_interactions == row)]) > 0) {
-          C <- paste('c*(', paste('x', competitive_interactions[-which(competitive_interactions == row)], sep = '', collapse = '+'), ')', sep = '')
+        if (length(compet[- which(compet == row)]) > 0) {
+          C <- paste('c*(', paste('x', compet[-which(compet == row)],
+                                  sep = '', collapse = '+'), ')', sep = '')
         } else {
           C <- ""
         }
-        M <- paste('m', row, mutualistic_interactions, '*x', mutualistic_interactions, sep = '', collapse = '+')
+        M <- paste('m', row, mutual, '*x', mutual, sep = '', collapse = '+')
         if (C == "") {
-          drift <- paste('x', row, '*(r - delta * t - s * x', row, ' + (', M, ')/(1+h*(', M, ')', '))', sep = '')
+          drift <- paste('x', row, '*(r - delta * t - s * x', row, ' + (', M,
+                         ')/(1+h*(', M, ')', '))', sep = '')
         } else {
-          drift <- paste('x', row, '*(r - delta * t - s * x', row, ' - ', C, ' + (', M, ')/(1+h*(', M, ')', '))', sep = '')
+          drift <- paste('x', row, '*(r - delta * t - s * x', row, ' - ', C, 
+                         ' + (', M, ')/(1+h*(', M, ')', '))', sep = '')
         }
       })
       self$drift = drift
@@ -72,10 +75,6 @@ SimSLV2 <- R6Class('SimSlv2',
       variables <- sapply(1:n, function(i) paste('x', i, sep = ''))
       self$variables = variables
     },
-    set_init = function(xinit) {
-      cat('Set initial values for SimSLV2 object.')
-      self$xinit = xinit
-    },
     set_params = function(n1, n2, r, delta, s, c, h, M, sigma) {
       self$r = r
       self$delta = delta
@@ -93,10 +92,20 @@ SimSLV2 <- R6Class('SimSlv2',
       params <- c(params, list(sigma = sigma))
       self$params = params
     },
+    sim = function(n1, n2, r, delta, s, c, h, M, sigma, steps, stepwise, xinit) {
+      # delta == (r - rmin) / (steps * stepwise)
+      self$rmin = r - delta * steps * stepwise
+      self$set_drift(n1, n2)
+      self$set_diffusion(n1 + n2)
+      self$set_variables(n1 + n2)
+      self$set_model()
+      self$set_times(steps, stepwise)
+      self$set_init(xinit)
+      self$set_params(n1, n2, r, delta, s, c, h, M, sigma)
+      super$sim()
+    },
     r = 0,  # the start value of [r]
-    rmin = NULL, # the end value of [r]
-    extension = 1.1, # extension of simulation, in order to ensure the happen of bifurcations
-    xinit_sd = 0.1, # the sd of initial values
     delta = 0, # decrease of [r] at each step, == (r - rmin) / (steps * stepwise)
-    sigma = 0.02
+    sigma = 0.02,
+    rmin = NULL # the end value of [r]
   ))

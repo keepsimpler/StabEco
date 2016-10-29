@@ -2,14 +2,14 @@
 #' @param meanfieldMutual a MeanFieldMutual object
 #' @note can use a generic function \code{print}
 print_MeanFieldMutual <- function(meanfieldMutual, remove.least = FALSE) {
-  classes <- class(meanfieldMutual)
-  if (! (classes[1] == 'MeanFieldMutual' && classes[2] == 'R6'))
+  #classes <- class(meanfieldMutual)
+  if (! (class(meanfieldMutual)[1] == 'MeanFieldMutual' )) #&& classes[2] == 'R6'
     stop('Should be an instance of MeanFieldMutual R6 class')
   ## print the output of Stochastic simulation
-  if (meanfieldMutual$simulated_sde == TRUE) {
-    refSim <- meanfieldMutual$refSim
-    delta <- refSim$delta
-    slv2.data <- refSim$get_out()
+  if (meanfieldMutual$state_slv2 == TRUE) {
+    simSLV2 <- meanfieldMutual$simSLV2
+    delta <- simSLV2$delta
+    slv2.data <- simSLV2$get_out()
     slv2.data <- sapply(slv2.data, function(one) as.numeric(one))
     # any(abs(slv2.data) > 1e5) # check if the simulation is valid
     # matplot(slv2.data, type = 'l')
@@ -19,10 +19,10 @@ print_MeanFieldMutual <- function(meanfieldMutual, remove.least = FALSE) {
       timeseries <- timeseries[, - which(timeseries[100, ] == min(timeseries[100, ]))]
     }
     #matplot(timeseries, type = 'l')
-    rs <- seq(from = refSim$r, to = refSim$rmin, length.out = refSim$steps + 1)
+    rs <- seq(from = simSLV2$r, to = simSLV2$rmin, length.out = simSLV2$steps + 1)
     timeseries <- cbind(rs, timeseries)
     p1 <- ggplot_timeseries(timeseries, xlab = 'r', ylab = 'Abundance', size = 0.2)
-    nstars <- sapply(rs, function(r) unlist(meanfieldMutual$get_xstars(r, meanfieldMutual$s, meanfieldMutual$c, meanfieldMutual$kc, meanfieldMutual$m, meanfieldMutual$km, meanfieldMutual$h)))
+    nstars <- sapply(rs, function(r) unlist(get_xstars(r, meanfieldMutual$s, meanfieldMutual$c, meanfieldMutual$kc, meanfieldMutual$m, meanfieldMutual$km, meanfieldMutual$h)))
     nstars <- t(nstars)
     nstars <- cbind(rs = rs, nstars)
     nstars <- data.frame(nstars)
@@ -55,7 +55,7 @@ print_MeanFieldMutual <- function(meanfieldMutual, remove.least = FALSE) {
     theme_bw() +
     labs(title = '', x = 'r', y = expression(V^s))
   p_asyn <- ggplot() +
-    geom_line(data = slv2.covariances.dataframe, aes(x = rs, y = Vs / Vc), colour = gg_color_hue(3)[3]) +
+    geom_line(data = slv2.covariances.dataframe, aes(x = rs, y = Vc / Vs), colour = gg_color_hue(3)[3]) +
     theme_bw() +
     labs(title = '', x = 'r', y = expression(eta))
   
@@ -76,7 +76,7 @@ print_MeanFieldMutual <- function(meanfieldMutual, remove.least = FALSE) {
     theme_bw() +
     labs(title = '', x = 'r', y = expression(paste('Derivative of ', V^s)))
   
-  dot_semicircle <- sapply(rs, function(r) unlist(meanfieldMutual$get_dot_semicircle(r, meanfieldMutual$s, meanfieldMutual$c, meanfieldMutual$kc, meanfieldMutual$m, meanfieldMutual$km, meanfieldMutual$h, meanfieldMutual$n, meanfieldMutual$graphm$get_graph())))
+  dot_semicircle <- sapply(rs, function(r) unlist(get_dot_semicircle(r, meanfieldMutual$s, meanfieldMutual$c, meanfieldMutual$kc, meanfieldMutual$m, meanfieldMutual$km, meanfieldMutual$h, meanfieldMutual$n, meanfieldMutual$graphm$get_graph())))
   dot_semicircle <- t(dot_semicircle)
   dot_semicircle <- cbind(r = rs, dot_semicircle)
   dot_semicircle <- data.frame(dot_semicircle)
@@ -134,5 +134,27 @@ ggplot_timeseries <- function(timeseries, title = NULL, xlab = NULL, ylab = NULL
           legend.position = ifelse(test = is_legend,"right", "none")) +
     labs(title = title, x = xlab, y = ylab)
   p
+}
+
+#' @title plot the output of ode simulation
+#' @param the output of ode simulation
+#' \describe{
+#'   \item{out}{output of one ODE simulation, including the trajectory of values of state variables}
+#'   \item{nstar}{the values of state variables in equilibrium}
+#'   \item{Phi}{the Jacobian matrix in equilibrium}
+#'   \item{params}{parameters assigned to the model}
+#'   \item{species.survived}{a vector of species that survived}
+#' }
+plot_ode_output_1 <- function(out) {
+  out_xstars = sapply(out, function(one) {
+    one$xstars
+  })
+  out_xstars = t(out_xstars)
+  matplot(out_xstars, type = 'l', lwd = 1.8, xlab = 'Time', ylab = 'Abundance')
+}
+
+plot_ode_output_2 <- function(out, step) {
+  ode.out <- out[[step]]$out
+  matplot(ode.out[, -1], type = 'l', lwd = 1.8, xlab = 'Time', ylab = 'Abundances of species')
 }
 
