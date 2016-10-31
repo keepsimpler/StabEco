@@ -90,7 +90,8 @@ MeanFieldMutual <- R6Class('MeanFieldMutual',
                        extinct_threshold = 1e-8) {
       x <- get_xstars(r, self$s, self$c, self$kc, self$m, self$km, self$h)
       x1 <- x$X1
-      if (is.nan(x1) || is.na(x1)) 
+      if (is.nan(x1) || is.na(x1) ||  # r < rmin
+          x1 <= 0) # rho < 1
         xinit = runif2(self$n, 1, 1 * self$xinit_sd)
       else
         xinit = runif2(self$n, x1, x1 * self$xinit_sd) 

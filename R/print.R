@@ -158,3 +158,22 @@ plot_ode_output_2 <- function(out, step) {
   matplot(ode.out[, -1], type = 'l', lwd = 1.8, xlab = 'Time', ylab = 'Abundances of species')
 }
 
+ggplot_lv2_press <- function(data, yvar, ylabel, ylim = NULL, first_extinction = FALSE) {
+  p1 <- ggplot(data, aes_string(x = 'r', y = yvar, group = 'variance_avg', color = 'variance_avg')) + # M_tilde_lambda1 J_lambda1 nstars_min nstars_mean
+    geom_line(size = 0.2) +
+    labs( x = 'r', y = ylabel) +
+    scale_color_viridis(name = expression(H(G[m])), guide = 'none') +
+    facet_grid(rho ~ ., scales = "free") +
+    theme_bw()
+  if (first_extinction == TRUE) {
+    p1 +
+      geom_point(data = tmp, aes_string(x = 'r', y = yval), color = 'black', size = 2)
+  }
+  if (! is.null(ylim)) 
+    p1 <- p1 + ylim(ylim)
+  p1
+}
+
+ggplot_lv2_auto <- function(data) {
+  
+}
