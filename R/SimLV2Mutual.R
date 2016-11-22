@@ -81,6 +81,7 @@ SimLV2Mutual <- R6Class('SimLV2Mutual',
     xstars.immigration = 0,
     xstars.sd = 0,
     is.out = FALSE,
+    rmax = NULL,
     out_press = NULL, # output of pressure simulation
     
     initialize = function(method = c('lsoda', 'lsode'),
@@ -116,6 +117,7 @@ SimLV2Mutual <- R6Class('SimLV2Mutual',
       self$xstars.immigration = xstars.immigration
       self$xstars.sd = xstars.sd
       self$is.out = is.out
+      self$rmax = coeffs$r.row.mu # maximal r 
       perturb_coeffs = list(r.delta.mu = r.delta.mu, r.delta.sd = r.delta.sd, xstars.immigration = xstars.immigration, xstars.sd = xstars.sd)
       
       self$set_times(steps = steps, stepwise = stepwise)

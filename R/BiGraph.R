@@ -22,7 +22,7 @@ BiGraph <- R6Class('BiGraph',
       self$k = 2 * sum(private$graph) / (self$n1 + self$n2)
       self$type = 'bipartite_degree_seq'
     },
-    initialize = function(type = c('bipartite_regular'), n1, n2 = NULL, k,
+    initialize = function(type = c('bipartite_regular', 'bipartite_gnm'), n1, n2 = NULL, k,
                           directed = TRUE, is_adj = TRUE, ...) {
       type <- match.arg(type)
       switch (type,
@@ -35,16 +35,22 @@ BiGraph <- R6Class('BiGraph',
                 # graph <- graph[sample.int(s[1]), sample.int(s[1])]
                 if (is_adj == TRUE)
                   graph <- inc_to_adj(graph)
-                self$n1 <- n1
-                self$n2 <- n1
-                self$type <- type
-                self$k <- k
-                self$n <- self$n1 + self$n2
-                private$graph <- graph
-#                self$directed <- directed
-                self$is_adj <- is_adj
+              },
+              bipartite_gnm = {
+                G = sample_bipartite(n1 = n1, n2 = n1, type = 'gnm', m = k * (n1 + n1) / 2)
+                graph <- as.matrix(as_adjacency_matrix(G))
+                if (is_adj == FALSE)
+                  graph <- adj_to_inc(graph, n1, n1)
               }
       )
+      self$n1 <- n1
+      self$n2 <- n1
+      self$type <- type
+      self$k <- k
+      self$n <- self$n1 + self$n2
+      private$graph <- graph
+      #self$directed <- directed
+      self$is_adj <- is_adj
     },
     get_graph = function(is_adj = TRUE) {
       if (self$is_adj == is_adj) {

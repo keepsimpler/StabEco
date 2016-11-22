@@ -1,3 +1,13 @@
+#' @title compute \code{r} when the semicircle eigenvalue equal to 0
+get_r_semicircle0 <- function(s, c, kc, m, km, h, n, graphm) {
+  stopifnot(n == dim(graphm)[1] && rowSums(graphm)[1] == km)
+  rho <- get_rho(s, c, kc, m, km)
+  semicircle_real <- sort(eigen(graphm)$values, decreasing = TRUE)[2]
+  semi_ratio_real <- (semicircle_real * m) / (s - c)
+  r_real <- 1/h * ( 1/rho * (semi_ratio_real^0.5 - 1) +  semi_ratio_real^-0.5 - 1 )
+  r_real
+}
+
 #' @title estimate semicircle eigenvalue of a bipartite regular graph using alon-method, plus-twins-method, or an empirical method
 #' @param n, node number
 #' @param km, node degree
@@ -124,9 +134,9 @@ get_jacobian_from_params_xstars <- function(params, xstars) {
   })
 }
 
-get_stability_from_params_xstars <- function(params, xstars) {
+get_stability_from_params_xstars <- function(params, xstars, flag = 'press') {
   n <- length(xstars)
-  r <- unique(params$r)
+  r <- mean(params$r)
   xstars_mean = mean(xstars)
   xstars_sd = sd(xstars)
   persistence = length(xstars[xstars > 0])
@@ -162,6 +172,11 @@ get_stability_from_params_xstars <- function(params, xstars) {
   
   m_tilde_mean <- mean(m_tilde)
   m_tilde_sd <- sd(m_tilde)
-  
-  c(r = r, xstars = xstars, xstars_mean = xstars_mean, xstars_min = min(xstars), xstars_max = max(xstars), xstars_sd = xstars_sd, persistence = persistence, M_lambda1 = M_lambda1, M_lambda2 = M_lambda2, M_tilde_lambda1 = M_tilde_lambda1, M_tilde_lambda2 = M_tilde_lambda2, M_tilde_dot = M_tilde_dot, Jshadow_lambda1 = Jshadow_lambda1, Jshadow_lambda2 = Jshadow_lambda2, Jshadow_dot = Jshadow_dot, J_lambda1 = J_lambda1, J_lambda2 = J_lambda2, J_dot = J_dot, m_tilde = m_tilde, m_tilde_mean = m_tilde_mean, m_tilde_sd = m_tilde_sd) # id = id, m = m, h = h, graphs_index = graphs_index, 
+  if (flag == 'auto') {
+    ret <- c(r = r, xstars = xstars, xstars_mean = xstars_mean, xstars_min = min(xstars), xstars_max = max(xstars), xstars_sd = xstars_sd, persistence = persistence, M_lambda1 = M_lambda1, M_lambda2 = M_lambda2, M_tilde_lambda1 = M_tilde_lambda1, M_tilde_lambda2 = M_tilde_lambda2, M_tilde_dot = M_tilde_dot, Jshadow_lambda1 = Jshadow_lambda1, Jshadow_lambda2 = Jshadow_lambda2, Jshadow_dot = Jshadow_dot, J_lambda1 = J_lambda1, J_lambda2 = J_lambda2, J_dot = J_dot, m_tilde = m_tilde, m_tilde_mean = m_tilde_mean, m_tilde_sd = m_tilde_sd) # id = id, m = m, h = h, graphs_index = graphs_index, 
+  }
+  else if (flag == 'press') {
+    ret <- c(r = r, xstars_mean = xstars_mean, xstars_min = min(xstars), xstars_max = max(xstars), xstars_sd = xstars_sd, persistence = persistence, M_lambda1 = M_lambda1, M_lambda2 = M_lambda2, M_tilde_lambda1 = M_tilde_lambda1, M_tilde_lambda2 = M_tilde_lambda2, M_tilde_dot = M_tilde_dot, Jshadow_lambda1 = Jshadow_lambda1, Jshadow_lambda2 = Jshadow_lambda2, Jshadow_dot = Jshadow_dot, J_lambda1 = J_lambda1, J_lambda2 = J_lambda2, J_dot = J_dot, m_tilde_mean = m_tilde_mean, m_tilde_sd = m_tilde_sd) 
+  }
+  ret
 }

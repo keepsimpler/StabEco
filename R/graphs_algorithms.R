@@ -139,13 +139,13 @@ bigraphs_rewiring_onestep <- function(B, connected = TRUE, ntry = 100) {
 get_degree_heterogeneity <- function(graph) {
   degrees <- c(rowSums(graph), colSums(graph))
   degree_avg <- mean(degrees) # average degree
-  variance <- sum(degrees^2) / sum(degrees)^2
-  entropy <- sum(degrees * log(degrees), na.rm = TRUE)
-  variance_avg <- sum((degrees / degree_avg)^2)
+  #variance <- sum(degrees^2) / sum(degrees)^2
+  #entropy <- sum(degrees * log(degrees), na.rm = TRUE)
+  variance_avg <- mean((degrees / degree_avg)^2)
   entropy_avg <- sum((degrees / degree_avg) * log((degrees / degree_avg)), na.rm = TRUE)
   graphm <- inc_to_adj(graph)
   eigenvalues <- sort(eigen(graphm)$values, decreasing = TRUE)
-  c(variance = variance, entropy = entropy, variance_avg = variance_avg, entropy_avg = entropy_avg, lambda1 = eigenvalues[1], lambda2 = eigenvalues[2], gap = eigenvalues[1] - eigenvalues[2]) # degrees = degrees, 
+  c(variance_avg = variance_avg, entropy_avg = entropy_avg, lambda1 = eigenvalues[1], lambda2 = eigenvalues[2]) # variance = variance, entropy = entropy, gap = eigenvalues[1] - eigenvalues[2]
 }
 
 #' @title generate a sequence of bipartite graphs with increasing hetero
@@ -156,36 +156,61 @@ get_degree_heterogeneity <- function(graph) {
 get_graphs <- function(n1, km) {
   biGraph <- BiGraph$new(type = 'bipartite_regular', n1 = n1, k = km, is_adj = FALSE)
   graphs <- bigraphs_rewiring(biGraph$get_graph(is_adj = FALSE))
+  graphs
+}
+get_graphs_hetero <- function(graphs) {
   # compute degree heterogeneitys of graphs
   graphs_hetero <- ldply(graphs, function(graph) {
     get_degree_heterogeneity(graph)
   })
   graphs_hetero$graphs_index <- 1:nrow(graphs_hetero)
+  graphs_hetero
+}
+get_graphs_degrees <- function(graphs) {
   graphs_degrees <- ldply(graphs, function(graph) {
     degrees <- c(rowSums(graph), colSums(graph))
     degrees
   })
   graphs_degrees$graphs_index <- 1:nrow(graphs_degrees)
-  list(graphs = graphs, graphs_hetero = graphs_hetero, graphs_degrees = graphs_degrees)
+  graphs_degrees
+}
+get_graphs_all <- function(n1, km, ntry) {
+  graphs_all = list()
+  for ( i in 1:ntry) {
+    graphs = get_graphs(n1, km)
+    graphs_all = c(graphs_all, graphs)
+  }
+  graphs_all
 }
 
-get_graphs_sf <- function(n1, km) {
-  alphas = seq(from = 1, to = 0.01, length.out = 100)
+#' @examples 
+#' get_graphs_sf(n1 = 50, km = 5, alpha_min = 0, alpha_max = 4, by = 0.04, ntry = 200)
+get_graphs_sf <- function(n1, km, alpha_min = 0.5, alpha_max = 4, by = 0.04, ntry = 100) {
+  alphas = seq(from = alpha_min, to = alpha_max, by = by)
   gammas = 1/ alphas + 1 #seq(from = 2, to = 10, by = 0.1) # exponent 
-  graphs <- lapply(gammas, function(gamma) {
-    G = sample_fitness_pl(n1, n1 * km, exponent.out = gamma, exponent.in = gamma)
-    graph <- as.matrix(as_adjacency_matrix(G))
+  graphs <- lapply(alphas, function(alpha) {
+    print(alpha)
+    #G = sample_fitness_pl(n1, n1 * km, exponent.out = gamma, exponent.in = gamma)
+    flag = FALSE
+    for (i in 1:ntry) {
+      G = sample_fitness(n1 * km, (1:n1)^-alpha, (1:n1)^-alpha)
+      graph <- as.matrix(as_adjacency_matrix(G))
+      G2 = igraph::graph_from_incidence_matrix(graph, add.names = NA)
+      if (igraph::is_connected(G2)  && sum(graph) == n1 * km) { #
+        flag = TRUE
+        break
+      } 
+    }
+    if (sum(graph) != n1 * km) {
+      warning('sum(graph) != n1 * km')
+    }
+    if (flag == FALSE) {
+      warning(paste('alpha = ', alpha, 'fail!'))
+      return(NULL)
+    }
+    else {
+      return(graph)
+    }
   })
-  sapply(graphs, sum)
-  # compute degree heterogeneitys of graphs
-  graphs_hetero <- ldply(graphs, function(graph) {
-    get_degree_heterogeneity(graph)
-  })
-  graphs_hetero$graphs_index <- 1:nrow(graphs_hetero)
-  graphs_degrees <- ldply(graphs, function(graph) {
-    degrees <- c(rowSums(graph), colSums(graph))
-    degrees
-  })
-  graphs_degrees$graphs_index <- 1:nrow(graphs_degrees)
-  list(graphs = graphs, graphs_hetero = graphs_hetero, graphs_degrees = graphs_degrees)
+  graphs
 }

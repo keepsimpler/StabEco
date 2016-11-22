@@ -38,7 +38,7 @@ MeanFieldMutual <- R6Class('MeanFieldMutual',
       if (! is.null(h)) self$h = h
       private$update_inner()
     },
-    initialize = function(n1 = 20, s = 1, c = 0.01, km = 5, m = 1, h = 0.5, delta = 0, xinit_sd = 0.1, graphc = NULL, graphm = NULL) {
+    initialize = function(n1 = 20, s = 1, c = 0.01, km = 5, m = 1, h = 0.5, s.sd = 0, c.sd = 0, m.sd = 0, delta = 0, xinit_sd = 0.1, graphc = NULL, graphm = NULL) {
       if (is.null(graphc)) {
         graphc <- TwoblocksGraph$new(type = 'two_blocks_regular', n1 = n1, n2 = n1, k = n1 - 1)
       }
@@ -54,18 +54,18 @@ MeanFieldMutual <- R6Class('MeanFieldMutual',
       if (is.null(graphm)) {
         graphm <- BiGraph$new(type = 'bipartite_regular', n1 = n1, k = km, directed = T, is_adj = T)
       }
-      else {
+      else { # a BiGraph class
         if (class(graphm)[1] == 'BiGraph') {
           stopifnot(graphm$n1 == n1 && graphm$n2 == n1 && graphm$k == km)
         }
-        else {
+        else { # or a incidency matrix of the graph
           tmp <- graphm
           graphm <- BiGraph$new(n1 = n1, k = km)
           graphm$set_graph_inc(graph_inc = tmp)
         }
       }
       self$xinit_sd = xinit_sd
-      super$initialize(n1, n2 = n1, s, kc = n1 - 1, c, km, m, h, s.sd = 0, c.sd = 0, m.sd = 0, h.sd = 0, delta, graphc, graphm)
+      super$initialize(n1, n2 = n1, s, kc = n1 - 1, c, km, m, h, s.sd = s.sd, c.sd = c.sd, m.sd = m.sd, h.sd = 0, delta, graphc, graphm)
       private$update_inner()
     },
     sim_slv2 = function(rmax = 0, steps = 1000, stepwise = 1, sigma = 0.02, extension = 1.1, xinit_sd = 0.1) {
@@ -84,30 +84,32 @@ MeanFieldMutual <- R6Class('MeanFieldMutual',
       #self$state_slv2 = TRUE  # set the state to have been simulated
       # self$out = self$simSLV2$get_out()
     },
-    sim_lv2 = function(r, steps = 100, stepwise = 1, method = c('lsoda', 'lsode'),
+    sim_lv2 = function(r, r.sd = 0, xinit = NULL, steps = 100, stepwise = 1, method = c('lsoda', 'lsode'),
                        jactype = c('fullint', 'fullusr'),
                        atol = 1e-8, rtol = 1e-8,
                        extinct_threshold = 1e-8) {
-      x <- get_xstars(r, self$s, self$c, self$kc, self$m, self$km, self$h)
-      x1 <- x$X1
-      if (is.nan(x1) || is.na(x1) ||  # r < rmin
-          x1 <= 0) # rho < 1
-        xinit = runif2(self$n, 1, 1 * self$xinit_sd)
-      else
-        xinit = runif2(self$n, x1, x1 * self$xinit_sd) 
-      super$sim_lv2(r, r.sd = 0, steps, stepwise, xinit, method, jactype, atol, rtol, extinct_threshold)
+      if (is.null(xinit)) {
+        x <- get_xstars(r, self$s, self$c, self$kc, self$m, self$km, self$h)
+        x1 <- x$X1
+        if (is.nan(x1) || is.na(x1) ||  # r < rmin
+            x1 <= 0) # rho < 1
+          xinit = runif2(self$n, 1, 1 * self$xinit_sd)
+        else
+          xinit = runif2(self$n, x1, x1 * self$xinit_sd) 
+      }
+      super$sim_lv2(r, r.sd = r.sd, steps, stepwise, xinit, method, jactype, atol, rtol, extinct_threshold)
     },
     sim_lv2_press = function(
       # parameters for pressure
       perturb_type = c('growthrate_all'), perturb_num, r.delta.mu, r.delta.sd = 0, xstars.immigration = 0, xstars.sd = 0, is.out = FALSE,
-      r, steps = 100, stepwise = 1, method = c('lsoda', 'lsode'),
+      r, r.sd = 0, steps = 100, stepwise = 1, method = c('lsoda', 'lsode'),
                        jactype = c('fullint', 'fullusr'),
                        atol = 1e-8, rtol = 1e-8,
                        extinct_threshold = 1e-8) {
       x <- get_xstars(r, self$s, self$c, self$kc, self$m, self$km, self$h)
       x1 <- x$X1
       xinit = runif2(self$n, x1, x1 * self$xinit_sd) 
-      super$sim_lv2_press(perturb_type, perturb_num, r.delta.mu, r.delta.sd, xstars.immigration, xstars.sd, is.out, r, r.sd = 0, steps, stepwise, xinit, method, jactype, atol, rtol, extinct_threshold)
+      super$sim_lv2_press(perturb_type, perturb_num, r.delta.mu, r.delta.sd, xstars.immigration, xstars.sd, is.out, r, r.sd = r.sd, steps, stepwise, xinit, method, jactype, atol, rtol, extinct_threshold)
     }
   ),
   private = list(
