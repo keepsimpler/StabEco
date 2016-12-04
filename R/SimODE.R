@@ -11,11 +11,11 @@ SimODE <- R6Class('SimODE',
     jacfunc = NULL, # function of compute Jacobian
     atol = 1e-8, # absolute error tolerance
     rtol = 1e-8, # relative error tolerance
-    extinct_threshold = 1e-10, # species extinction threshold
+    extinct_threshold = 1e-6, # species extinction threshold
     out = NULL,  # output of ODE simulation
     xstars = NULL, # equilibrium values of state variables
     set_times = function(steps, stepwise) {
-      cat('Set timesteps for SimODE object.\n')
+      #cat('Set timesteps for SimODE object.\n')
       self$steps = steps
       self$stepwise = stepwise
       self$times = seq(from = 0, by = stepwise, length.out = steps + 1)

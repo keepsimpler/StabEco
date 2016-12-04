@@ -514,15 +514,82 @@ ggplot_lv2_press <- function(data, yvar, ylabel, xlim = NULL, ylim = NULL, first
   p1
 }
 
+print_lv2_press <- function(graphs_xstars) {
+  graphs_xstars_agg <- aggregate(cbind(xstars_min, xstars_mean, xstars_sd, xstars_max, persistence, M_lambda1, M_tilde_lambda1, Jshadow_lambda1, J_lambda1, variance_avg,  entropy_avg) ~ rho + alpha.y + r, graphs_xstars, mean)
+
+  library(dplyr)
+  #graphs_xstars_first_extinct <- graphs_xstars %>% group_by(rho, alpha.y) %>% filter(persistence == n) %>% filter(row_number() == n) 
+  graphs_xstars_first_extinct <- graphs_xstars_agg %>% group_by(rho, alpha.y) %>% filter(xstars_min > 0) %>% filter(row_number() == 1) 
+  graphs_xstars_last_extinct <- graphs_xstars_agg %>% group_by(rho, alpha.y) %>% filter(persistence == 0) %>% filter(row_number() == 1) 
+  graphs_xstars_last_extinct <- graphs_xstars_agg %>% group_by(rho, alpha.y) %>% filter(xstars_min == 0) %>% filter(row_number() == 1) 
+  
+  tmp = graphs_xstars[graphs_xstars$idx == 1, ]
+  tmp$rho_label = paste('rho', '==', as.character(tmp$rho), sep = '')
+  press_xstars_mean <- ggplot(tmp, aes_string(x = 'r', y = 'xstars_mean', group = 'alpha.y', color = 'alpha.y')) + 
+    geom_line(size = 0.2) +
+    labs( x = 'r', y = 'Mean abundance') +
+    scale_color_viridis(name = expression(beta), guide = 'none') +
+    facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
+    theme_bw()
+
+  
+  
+  tmp = graphs_xstars_agg[graphs_xstars_agg$rho == 2, ]
+  tmp2 = graphs_xstars_first_extinct[graphs_xstars_first_extinct$rho == 2, ]
+  tmp3 = graphs_xstars_last_extinct[graphs_xstars_last_extinct$rho == 2, ]
+  p_xstars_min <- ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = xstars_min), interpolate = TRUE) +
+    geom_line(data = tmp2, aes(x = alpha.y, y = r), size = 0.2, color = 'darkgrey', alpha = 0.5) +
+    geom_smooth(data = tmp2, aes(x = alpha.y, y = r), size = 1, method = 'loess', span = 0.5, color = 'green', se = FALSE) +
+    geom_line(data = tmp3, aes(x = alpha.y, y = r), size = 1.5, color = 'black') +
+    scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+    labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = 'ARS', limits=c(0, max(tmp$xstars_min)), low = "blue", high = "red") +
+    theme_bw() 
+    
+  
+  tmp = graphs_xstars_agg[graphs_xstars_agg$rho == 2, ]
+  p_M_lambda1 <- ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = M_lambda1), interpolate = TRUE) +
+    scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+    labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = expression(lambda[1](G[m])), limits=c(min(tmp$M_lambda1), max(tmp$M_lambda1)), low = "blue", high = "red") +
+    theme_bw() 
+
+  p_M_tilde_lambda1 <- ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = M_tilde_lambda1), interpolate = TRUE) +
+      scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+      labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = expression(lambda[1](widetilde(M))), limits=c(min(tmp$M_tilde_lambda1), 1.), low = "blue", high = "red") + # max(tmp$M_tilde_lambda1)
+    theme_bw() 
+  
+  p_Jshadow_lambda1 <- ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = Jshadow_lambda1), interpolate = TRUE) +
+    scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+    labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = expression(lambda[1](widetilde(J))), limits=c(min(tmp$Jshadow_lambda1), 0), low = "blue", high = "red") + 
+    theme_bw() 
+  
+  tmp = graphs_xstars_agg[graphs_xstars_agg$rho == 2, ]
+  p_persistence <- 
+    ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = persistence), interpolate = TRUE) +
+    scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+    labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = expression(lambda[1](widetilde(J))), limits=c(min(tmp$persistence), max(tmp$persistence)-1), low = "blue", high = "red") + 
+    theme_bw() 
+  
+  
+}
+
 #' @title print output of autonormous simulation
 #' @examples 
-#' ggplot_lv2_auto(graphs_xstars[round(graphs_xstars$r,10) == 0 & graphs_xstars$rho %in% c(0.5, 1., 2), ], graphs_degrees)
-#' ggplot_lv2_auto(graphs_xstars[round(graphs_xstars$r,10) == 1, ], graphs_degrees)
-ggplot_lv2_auto <- function(graphs_xstars_auto, graphs_degrees) {
+#' print_lv2_auto(graphs_xstars[round(graphs_xstars$r,10) == 0 & graphs_xstars$rho %in% c(0.5, 1., 2), ], graphs_degrees)
+#' print_lv2_auto(graphs_xstars[round(graphs_xstars$r,10) == 1, ], graphs_degrees)
+print_lv2_auto <- function(graphs_xstars_auto) {
   stopifnot(nrow(graphs_xstars_auto) > 0)
-  graphs_xstars_auto <- merge(graphs_xstars_auto, graphs_degrees, by = 'graphs_index')
-  
-  hetero <- 'variance_avg' # 'entropy_avg'
+
+  hetero <- 'alpha.y' # 'entropy_avg' variance_avg
   m_tilde_names <- paste('m_tilde', 1:(2*n1), sep = '')
   xstars_names <- paste('xstars', 1:(2*n1), sep = '')
   degrees_names <- paste('V', 1:(2*n1), sep = '')
@@ -538,72 +605,64 @@ ggplot_lv2_auto <- function(graphs_xstars_auto, graphs_degrees) {
     #  geom_point(data = tmp, aes_string(x = 'degree', y = 'abundance', group = hetero, color = hetero), size = 1., alpha = 0.5) +
     geom_smooth(data = tmp, aes_string(x = 'degree', y = 'abundance', group = hetero, color = hetero), method = 'loess', se = FALSE, size = 0.5) +
     labs(x = expression(k[m]), y = 'Abundances of individual species') +
-    scale_color_viridis(name = expression(H(G[m])), guide = 'none' ) +
+    scale_color_viridis(name = expression(beta), guide = 'none' ) +
     facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
     theme_bw()
   
-  # ggplot() +
-  #   geom_point(data = tmp, aes_string(x = hetero, y = 'abundance', group = 'log(degree)', color = 'log(degree)'), size = 1., alpha = 0.5) +
-  #   #  geom_hline(yintercept = 0, linetype = "dashed") +
-  #   labs(x = expression(H(G[m])), y = 'Abundance') +
-  #   scale_color_viridis(name = expression(k[m])) +
+  tmp4 = tmp[tmp$rho == 2, ]
+  p_degrees_m_tilde <- ggplot() +
+    geom_smooth(data = tmp4, aes_string(x = 'degree', y = 'm_tilde', group = hetero, color = hetero), size = 0.2, se = FALSE, method = 'loess', span = 0.5) +
+    labs(x = expression(k[m]), y = expression(phi)) + # tilde(m)
+    scale_color_viridis(name = expression(beta)) +
+#    facet_grid(rho ~ ., scales = "free") +
+    theme_bw()
+
+  # p_xstars_m_tilde <- ggplot() +
+  #   geom_point(data = tmp, aes_string(x = 'abundance', y = 'm_tilde', group = hetero, color = hetero), size = 1., alpha = 0.5) +
+  #   labs(x = 'Abundance', y = expression(phi)) + # tilde(m)
+  #   scale_color_viridis(name = expression(beta)) +
   #   facet_grid(rho ~ ., scales = "free") +
   #   theme_bw()
   
-  p_degrees_m_tilde <- ggplot() +
-    geom_smooth(data = tmp, aes_string(x = 'degree', y = 'm_tilde', group = hetero, color = hetero), size = 0.2, se = FALSE, method = 'loess') +
-    labs(x = expression(k[m]), y = expression(phi)) + # tilde(m)
-    scale_color_viridis(name = expression(H(G[m]))) +
-    facet_grid(rho ~ ., scales = "free") +
-    theme_bw()
-  
-  p_xstars_m_tilde <- ggplot() +
-    geom_point(data = tmp, aes_string(x = 'abundance', y = 'm_tilde', group = hetero, color = hetero), size = 1., alpha = 0.5) +
-    labs(x = 'Abundance', y = expression(phi)) + # tilde(m)
-    scale_color_viridis(name = expression(H(G[m]))) +
-    facet_grid(rho ~ ., scales = "free") +
-    theme_bw()
-  
   # ggplot() +
-  #   geom_smooth(data = tmp, aes_string(x = hetero, y = 'm_tilde * degree', group = 'log(degree)', color = 'log(degree)'), size = 1., alpha = 0.5) +
+  #   geom_point(data = tmp, aes_string(x = hetero, y = 'm_tilde * degree', group = 'log(degree)', color = 'log(degree)'), size = 1., alpha = 0.5) +
   #   labs(x = expression(H(G[m])), y = expression(phi*k[m])) + # tilde(m)
   #   scale_color_viridis(name = expression(k[m])) +
   #   facet_grid(rho ~ ., scales = "free") +
   #   theme_bw()
   
-  graphs_xstars_auto$rho_label <- paste('rho', '==', as.character(graphs_xstars_auto$rho), sep = '')   
+  tmp2 <- aggregate(cbind(xstars_min, xstars_mean, xstars_sd, xstars_max, persistence, M_lambda1, M_tilde_lambda1, Jshadow_lambda1, J_lambda1, variance_avg,  entropy_avg) ~ rho + alpha.y + gamma, graphs_xstars_auto, mean)
+  tmp3 <- aggregate(cbind(xstars_min, xstars_mean, xstars_sd, xstars_max, persistence, M_lambda1, M_tilde_lambda1, Jshadow_lambda1, J_lambda1, variance_avg,  entropy_avg) ~ rho + alpha.y + gamma, graphs_xstars_auto, var) # error
+  
+  tmp2$rho_label <- paste('rho', '==', as.character(tmp2$rho), sep = '')   
   cols <- gg_color_hue(3); names(cols) <- c('color1', 'color2', 'color3');
-  p_xstars_mean <- ggplot(data = graphs_xstars_auto, aes(x = variance_avg)) +
+  p_xstars_mean <- ggplot(data = tmp2, aes(x = alpha.y)) +
     #  geom_line(aes(y = xstars_max, colour = 'color1'), size = 1.) +
     geom_line(aes(y = xstars_mean), colour = cols[1], size = 1.) +
     #  geom_line(aes(y = xstars_min, colour = 'color3'), size = 1.) +
-    labs(x = expression(H(G[m])), y = 'Mean abundance') +
+    labs(x = expression(beta), y = 'Mean abundance') +
     facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
     theme_bw()
   
-  p_Jshadow_lambda1 <- ggplot() +
-    geom_line(data = graphs_xstars_auto, aes(x = variance_avg, y = Jshadow_lambda1, group = factor(rho), color = factor(rho)), size = 1.) +
-    labs(x = expression(H(G[m])), y = 'Jshadow') +
-    theme_bw()
-  
-  ggplot() +
-    geom_line(data = graphs_xstars_auto, aes(x = alpha.y, y = xstars_min, group = factor(rho), color = factor(rho)), size = 1.) +
-    labs(x = expression(H(G[m])), y = 'Abundance Mean') +
+  p_xstars_min <- ggplot() +
+    geom_line(data = tmp2, aes(x = alpha.y, y = xstars_min), colour = cols[1], size = 1.) +
+    labs(x = expression(beta), y = 'ARS') +
     facet_grid(rho ~ ., scales = "free") +
     theme_bw()
+
+  p_Jshadow_lambda1 <- ggplot() +
+    geom_line(data = tmp2, aes(x = alpha.y, y = Jshadow_lambda1), colour = cols[1], size = 1.) +
+    labs(x = expression(beta), y = expression(lambda[1](widetilde(J)))) +
+    facet_grid(rho ~ ., scales = "free") +
+    theme_bw()
+
   # ggplot() +
-  #   geom_line(data = graphs_xstars_auto, aes(x = variance_avg, y = xstars_sd / xstars_mean, group = factor(rho), color = factor(rho)), size = 1.) +
-  #   labs(x = expression(H(G[m])), y = 'Abundance Min') +
+  #   geom_line(data = tmp2, aes(x = alpha.y, y = M_tilde_lambda1), colour = cols[1], size = 1.) + # J_lambda1 M_lambda1 M_tilde_lambda1
+  #   labs(x = expression(beta), y = expression(lambda[1](widetilde(J)))) +
+  #   facet_grid(rho ~ ., scales = "free") +
   #   theme_bw()
-  # ggplot() +
-  #   geom_line(data = graphs_xstars_auto, aes(x = variance_avg, y = persistence, group = factor(Delta), color = factor(Delta)), size = 1.) +
-  #   labs(x = expression(H(G[m])), y = 'Persistence') +
-  #   theme_bw()
-  # ggplot() +
-  #   geom_line(data = graphs_xstars_auto, aes(x = xstars_min, y = J_lambda1, group = factor(rho), color = factor(rho)), size = 1.) +
-  #   labs(x = 'Abundance Min', y = 'J') +
-  #   theme_bw()
-  list(p_degrees_xstars = p_degrees_xstars, p_degrees_m_tilde = p_degrees_m_tilde, p_xstars_m_tilde = p_xstars_m_tilde, p_xstars_mean = p_xstars_mean, p_Jshadow_lambda1 = p_Jshadow_lambda1)
+  
+  list(p_degrees_xstars = p_degrees_xstars,  p_xstars_mean = p_xstars_mean, p_xstars_min = p_xstars_min, p_Jshadow_lambda1 = p_Jshadow_lambda1) #p_degrees_m_tilde = p_degrees_m_tilde, p_xstars_m_tilde = p_xstars_m_tilde,
 }
 
 #' @title print effect of heterogeneity on the feasiblility and resilience
@@ -617,7 +676,7 @@ ggplot_lv2_resilience_feasibility <- function(graphs_xstars) {
   graphs_xstars_last_extinct <- graphs_xstars %>% group_by(rho, graphs_index) %>% filter(persistence == 0) %>% filter(row_number() == 1) 
   
   p_first_extinct_0 <- ggplot() +
-    geom_smooth(data = graphs_xstars_first_extinct, aes_string(x = 'variance_avg', y = 'r', group = 'factor(rho)', color = 'factor(rho)')) +
+    geom_smooth(data = graphs_xstars_first_extinct, aes_string(x = 'alpha.y', y = 'r', group = 'factor(rho)', color = 'factor(rho)')) +
     theme_bw()
   p_last_extinct_0 <- ggplot() +
     geom_line(data = graphs_xstars_last_extinct, aes_string(x = 'variance_avg', y = 'r', group = 'factor(rho)', color = 'factor(rho)')) +
@@ -648,8 +707,8 @@ ggplot_lv2_resilience_feasibility <- function(graphs_xstars) {
   
   graphs_xstars_first_extinct = graphs_xstars_first_extinct[graphs_xstars_first_extinct$graphs_index != 1, ]
   p_first_extinct <- ggplot() +
-    geom_line(data = graphs_xstars_first_extinct, aes_string(x = 'variance_avg', y = 'r', group = 'factor(rho)', color = 'factor(rho)'), size = 0.2, color = 'grey', alpha = 0.5) +
-    geom_smooth(data = graphs_xstars_first_extinct, aes_string(x = 'variance_avg', y = 'r', group = 'factor(rho)', color = 'factor(rho)'), method = 'loess', se = FALSE) +
+    geom_line(data = graphs_xstars_first_extinct, aes_string(x = 'alpha.y', y = 'r', group = 'factor(rho)', color = 'factor(rho)'), size = 0.2, color = 'grey', alpha = 0.5) +
+    geom_smooth(data = graphs_xstars_first_extinct, aes_string(x = 'alpha.y', y = 'r', group = 'factor(rho)', color = 'factor(rho)'), method = 'loess', formula = x~y, se = FALSE) +
     #  geom_smooth(data = graphs_xstars_last_extinct, aes_string(x = 'variance_avg', y = 'r', group = 'factor(rho)', color = 'factor(rho)'), method = 'loess', se = FALSE) +
     labs(x = expression(H(G[m])), y = 'First Extinction') +
     scale_color_discrete(guide = 'none') +

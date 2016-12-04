@@ -31,7 +31,7 @@ MutualModel <- R6Class('MutualModel',
     state_lv2 = FALSE,   # if the LV2 has been simulated
     state_lv2_press = FALSE,   # if the LV2 Press has been simulated
     initialize = function(n1, n2, s, kc, c, km, m, h, s.sd, c.sd, m.sd, h.sd, delta, graphc, graphm) {
-      cat('Initialize MutualModel object.\n')
+      #cat('Initialize MutualModel object.\n')
       self$n1 <- n1
       self$n2 <- n2
       self$n <- self$n1 + self$n2
@@ -62,8 +62,8 @@ MutualModel <- R6Class('MutualModel',
     sim_lv2 = function(r, r.sd =0, steps = 100, stepwise = 1, xinit, method = c('lsoda', 'lsode'),
                        jactype = c('fullint', 'fullusr'),
                        atol = 1e-8, rtol = 1e-8,
-                       extinct_threshold = 1e-8) {
-      cat('Simulate LV2.\n')
+                       extinct_threshold = 1e-6) {
+      #cat('Simulate LV2.\n')
       self$state_lv2 = FALSE 
       coeffs <- list(n1 = self$n1, n2 = self$n2, r.row.mu = r, r.row.sd = r.sd, r.col.mu = r, r.col.sd = r.sd, s.mu = self$s, s.sd = self$s.sd, c.mu = self$c, c.sd = self$c.sd, m.mu = self$m, m.sd = self$m.sd, h.mu = self$h, h.sd = self$h.sd, delta = self$delta)
       self$simLV2 <- SimLV2Mutual$new(method, jactype, atol, rtol, extinct_threshold)

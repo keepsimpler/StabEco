@@ -8,8 +8,9 @@ Maintainer: KeepSimpler <fengwenfeng@gmail.com>
 Description:
 Imports:
     deSolve (>= 1.10-8),
-    rootSolve (>= 1.6.5),
     plyr (>= 1.8.1),
-    igraph (>= 0.7.1)
+    igraph (>= 0.7.1),
+    bipartite,
+    yuima
 License: What license is it under?
 LazyData: TRUE

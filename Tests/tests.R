@@ -38,21 +38,48 @@ print(get(plot_names[i]))  #
 dev.off()
 
 ### print Figure 4
-p_colorbar <- ggplot(data = graphs_xstars, aes_string(x = 'r', y = 'xstars_mean', group = 'variance_avg', color = 'variance_avg')) +
-  scale_color_viridis(name = expression(H(G[m])), guide = guide_colorbar(direction = "horizontal", position = 'bottom') ) +
-  theme(legend.position = "bottom", legend.box = "horizontal") 
+library(viridis)
+p_colorbar <- ggplot(data = graphs_xstars_agg[graphs_xstars_agg$rho == 0.5,], aes_string(x = 'r', y = 'xstars_mean', group = 'alpha.y', color = 'alpha.y')) +
+  geom_point() +
+  scale_color_viridis(name = expression(beta), guide = guide_colorbar(direction = "horizontal", position = 'bottom') )  +
+  theme(legend.position = "bottom", legend.box = "horizontal")
 
-i = 4
+i = 3
 filename <- paste('hetero_abundance_', i, '.png', sep = '')
 width = 89 #mm
 heights = c(0.7, 0.7, 0.7, 1.2)
 png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
 #pdf(filename, width = 5, height = 5 / 1.3)
-plot_names = c('p_degrees_xstars', 'p_xstars_mean', 'p_xstars_mean_2', 'p_colorbar')
+plot_names = c('p_degrees_xstars', 'p_xstars_mean', 'press_xstars_mean', 'p_colorbar')
 print(get(plot_names[i]))  #
 dev.off()
 
 ### print Figure 5
+i = 1
+filename <- paste('hetero_abundance_min_', i, '.png', sep = '')
+width = 120 #mm
+heights = c(1.2)
+png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
+#pdf(filename, width = 5, height = 5 / 1.3)
+plot_names = c('p_xstars_min')
+print(get(plot_names[i]))  #
+dev.off()
+
+
+### print Figures for SI
+i = 1
+filename <- paste('hetero_Jshadow_', i, '.png', sep = '')
+width = 120 #mm
+heights = c(1.2, 1.2, 1.2, 1.2)
+png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
+#pdf(filename, width = 5, height = 5 / 1.3)
+plot_names = c('p_M_lambda1', 'p_M_tilde_lambda1', 'p_Jshadow_lambda1', 'p_degrees_m_tilde')
+print(get(plot_names[i]))  #
+dev.off()
+
+
+
+
 tmp = graphs_xstars[graphs_xstars$rho %in% c(2) , c('r', 'variance_avg', 'xstars_min')] # & graphs_xstars$graphs_index != 1 & graphs_xstars$J_lambda1 <= 0  & graphs_xstars$xstars_min > 0  & graphs_xstars$r >= 0
 tmp$variance_avg = round(tmp$variance_avg, 5)
 #tmp[tmp$J_lambda1 > 0, ]$J_lambda1 = 0 #

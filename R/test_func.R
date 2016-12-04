@@ -119,7 +119,7 @@ get_coeffs <- function(graphs, graphs.start = 1, graphs.by = 1, n1 = 50, km = 5,
 
 #' @title Test autonomous equilibrium of LV2 dynamics
 #' @param coeffs \code{get_coeffs}
-test_lv2 <- function(coeffs, graphs) {
+test_lv2 <- function(coeffs, graphs, xinit_sd = 0.5, flag = 'auto') {
   graphs_xstars_auto <- ddply(coeffs, .variables = .(id), function(coeff) {
     print(coeff$id)
     n1 = coeff$n1
@@ -136,11 +136,11 @@ test_lv2 <- function(coeffs, graphs) {
     graphs_index <- coeff$graphs_index
     graphm <- graphs[[coeff$graphs_index]]
     
-    meanfieldMutual <- MeanFieldMutual$new(n1 = n1, s = s, c = c, km = km, m = m, h = h, graphm = graphm, xinit_sd = 0.2)
-    meanfieldMutual$sim_lv2(r = r, steps = 200, stepwise = 1, method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-8)
+    meanfieldMutual <- MeanFieldMutual$new(n1 = n1, s = s, c = c, km = km, m = m, h = h, graphm = graphm, xinit_sd = xinit_sd)
+    meanfieldMutual$sim_lv2(r = r, steps = 200, stepwise = 1, method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-5)
     xstars <- meanfieldMutual$simLV2$xstars
     params <- meanfieldMutual$simLV2$params
-    c(id = id, n1 = n1, s = s, c = c, m = m, km = km, h = h, rho = rho, alpha = alpha, Delta = Delta, graphs_index = graphs_index, get_stability_from_params_xstars(params, xstars)) # r = r, 
+    c(n1 = n1, s = s, c = c, m = m, km = km, h = h, rho = rho, alpha = alpha, Delta = Delta, graphs_index = graphs_index, get_stability_from_params_xstars(params, xstars, flag = flag)) # r = r, 
   })
 }
 
@@ -166,7 +166,7 @@ test_lv2_press <- function(coeffs, graphs, extension = 10) {
     graphm <- graphs[[coeff$graphs_index]]
     
     meanfieldMutual <- MeanFieldMutual$new(n1 = n1, s = s, c = c, km = km, m = m, h = h, delta = delta, graphm = graphm)
-    meanfieldMutual$sim_lv2_press(perturb_type = 'growthrate_all', perturb_num = r.steps * extension, r.delta.mu = r.stepwise, r.delta.sd = 0, xstars.sd = 0.1, is.out = FALSE, r = rmax, steps = 50, stepwise = 1,  method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-8)
+    meanfieldMutual$sim_lv2_press(perturb_type = 'growthrate_all', perturb_num = r.steps * extension, r.delta.mu = r.stepwise, r.delta.sd = 0, xstars.sd = 0.1, is.out = FALSE, r = rmax, steps = 50, stepwise = 1,  method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-5)
     out <- meanfieldMutual$simLV2Press$out_press
     ldply(out, function(one) {
       xstars <- one$xstars

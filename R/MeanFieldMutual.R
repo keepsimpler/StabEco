@@ -87,13 +87,15 @@ MeanFieldMutual <- R6Class('MeanFieldMutual',
     sim_lv2 = function(r, r.sd = 0, xinit = NULL, steps = 100, stepwise = 1, method = c('lsoda', 'lsode'),
                        jactype = c('fullint', 'fullusr'),
                        atol = 1e-8, rtol = 1e-8,
-                       extinct_threshold = 1e-8) {
+                       extinct_threshold = 1e-5) {
       if (is.null(xinit)) {
         x <- get_xstars(r, self$s, self$c, self$kc, self$m, self$km, self$h)
         x1 <- x$X1
+        # if abundance of mean field model does not exist or be less than zero
+        # we let initial abundances uniformly distributed in [0, xinit_sd]
         if (is.nan(x1) || is.na(x1) ||  # r < rmin
-            x1 <= 0) # rho < 1
-          xinit = runif2(self$n, 1, 1 * self$xinit_sd)
+            x1 <= extinct_threshold) # rho < 1
+          xinit = runif(self$n, 0, 1 * self$xinit_sd)
         else
           xinit = runif2(self$n, x1, x1 * self$xinit_sd) 
       }

@@ -17,7 +17,7 @@ SimObj <- R6Class('SimObj',
       cat('Set timesteps for SimObj object.\n')
     },
     set_init = function(xinit) {
-      cat('Set initial values for SimObj object.\n')
+      #cat('Set initial values for SimObj object.\n')
       self$xinit = xinit
     },
     set_params = function() {

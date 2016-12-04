@@ -87,7 +87,7 @@ SimLV2Mutual <- R6Class('SimLV2Mutual',
     initialize = function(method = c('lsoda', 'lsode'),
                           jactype = c('fullusr', 'fullint'),
                           atol = 1e-8, rtol = 1e-8,
-                          extinct_threshold = 1e-8) {
+                          extinct_threshold = 1e-6) {
       self$model <- model_lv2_cm
       self$jacfunc <- jacfunc_lv2_cm
       self$method <- match.arg(method)
