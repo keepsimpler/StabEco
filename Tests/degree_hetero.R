@@ -4,7 +4,7 @@ library(plyr)
 library(reshape2)
 library(igraph)
 n1 = 50 #n2 = n1 n = n1 + n2 kc = n1 - 1 
-km = 5
+km = 6
 s = 1
 h =  0.1 #c(0.05, 0.1, 0.2, 0.4) have no effect
 delta = 0. # 0 0.5
@@ -81,8 +81,8 @@ ggplot(tmp, aes(x = r, y = Jshadow_lambda1, group = variance_avg, color = varian
 #   geom_smooth(method = 'lm')
 
 
-r = 0.5 # 0.5
-graphs_xstars_auto_r0 <- ddply(data.frame(idx = 11:20), .variables = c('idx'), function(one) {
+r = 1 # 0 0.5 1
+graphs_xstars_auto_r10 <- ddply(data.frame(idx = 1:20), .variables = c('idx'), function(one) {
   graphs <- get_graphs_sf(n1, km, alpha_min = alpha_min, alpha_max = alpha_max, by = by, ntry = 500)
   #graphs_all = c(graphs_all, graphs)
   #sapply(graphs, sum)

@@ -532,6 +532,53 @@ print_lv2_press <- function(graphs_xstars) {
     facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
     theme_bw()
 
+
+  mean_fun <- function(persistences) {
+    if (length(persistences) < idx_num)
+      persistences = c(persistences, rep(0, idx_num - length(persistences)))
+    mean(persistences)
+  }
+
+  #tmp2 = dcast(data = graphs_xstars_rho4, formula = r ~ alpha.y, mean_fun,value.var = 'persistence')
+  
+  idx_num = length(unique(graphs_xstars$idx))
+  tmp <- aggregate(cbind(persistence) ~ rho + alpha.y + r, graphs_xstars[graphs_xstars$rho %in% c(1, 2),], mean_fun) #[graphs_xstars_rho4$persistence >= 0, ]
+  idx_num = length(unique(graphs_xstars_rho4$idx))
+  tmp2 <- aggregate(cbind(persistence) ~ rho + alpha.y + r, graphs_xstars_rho4, mean_fun)
+  tmp = rbind(tmp, tmp2)
+
+  tmp2 = tmp[tmp$persistence >= 60 , ] #& tmp$r <= 0
+  library(data.table)
+  tmp2 = data.table(tmp2)
+  tmp2[, r_min := min(r), by = list(rho, alpha.y)]
+  tmp2[r == r_min, persistence := 60,]
+  
+  tmp2$rho_label = paste('rho', '==', as.character(tmp2$rho), sep = '')
+  
+  press_persistence_1 <- ggplot(tmp2, aes_string(x = 'r', y = 'persistence', group = 'alpha.y', color = 'alpha.y')) + 
+    geom_line(size = 0.2) +
+    labs( x = 'r', y = 'Persistence') +
+    scale_color_viridis(name = expression(beta), guide = 'none') +
+    ylim(c(60, 100)) +
+    facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
+    theme_bw()
+
+  tmp3 = tmp2[(tmp2$rho == 4 & tmp2$r < 0) | tmp2$rho %in% c(1,2), ]
+  press_persistence_2 <- ggplot(tmp3, aes_string(x = 'r', y = 'persistence', group = 'alpha.y', color = 'alpha.y')) + 
+    geom_line(size = 0.2) +
+    labs( x = 'r', y = 'Persistence') +
+    scale_color_viridis(name = expression(beta), guide = 'none') +
+    ylim(c(60, 100)) +
+    facet_wrap( ~ rho_label, ncol = 1, scales = "free", labeller = label_parsed) +
+    theme_bw()
+  
+  # ggplot() + 
+  #   geom_raster(data = tmp2, aes(x = alpha.y, y = r, fill = persistence), interpolate = TRUE) +
+  #   scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+  #   labs( x = expression(beta), y = 'r') +
+  #   scale_fill_gradient(name = 'Persistence', limits=c(80, 99), low = "blue", high = "red") +
+  #   theme_bw() 
+  
   
   
   tmp = graphs_xstars_agg[graphs_xstars_agg$rho == 2, ]
@@ -599,6 +646,21 @@ print_lv2_auto <- function(graphs_xstars_auto) {
   tmp3 <- melt(data = graphs_xstars_auto, id.vars = c(hetero, 'r', 'rho'), measure.vars = degrees_names, variable.name = 'node', value.name = 'degree')
   tmp <- cbind(tmp, m_tilde = tmp2$m_tilde, degree = tmp3$degree)
   
+  rho = 2
+  tmp2 = tmp[tmp$rho == rho, ]
+  
+  #tmp4 <- aggregate(cbind(abundance) ~ degree + alpha.y + r, tmp2, mean)
+  tmp3 <- acast(data = tmp2, alpha.y ~ degree, mean, value.var = 'abundance')
+  library(zoo)
+  tmp7 <- sapply(1:dim(tmp3)[1], function(row) {
+    tmp4 = tmp3[row, ]
+    tmp5 = zoo(tmp4)
+    tmp6 = na.approx(tmp5)
+    c(as.numeric(tmp6), rep(NaN, dim(tmp3)[2] - length(tmp6)))
+  })
+  write.table(tmp7, file = paste('means_', rho, '.csv', sep = ''), sep = ',', row.names = FALSE, col.names = FALSE)
+  
+  
   tmp$rho_label <- paste('rho', '==', as.character(tmp$rho), sep = '')   
   require(viridis)
   p_degrees_xstars <- ggplot() +
@@ -608,6 +670,15 @@ print_lv2_auto <- function(graphs_xstars_auto) {
     scale_color_viridis(name = expression(beta), guide = 'none' ) +
     facet_grid(rho_label ~ ., scales = "free", labeller = label_parsed) +
     theme_bw()
+
+  tmp = graphs_xstars_auto[graphs_xstars_auto$rho == 2, ]
+  ggplot() + 
+    geom_raster(data = tmp, aes(x = alpha.y, y = r, fill = abundance), interpolate = TRUE) +
+    scale_x_continuous(sec.axis = sec_axis(trans = ~., name = expression(gamma), labels = c('Inf', 2, 1.5, 1.33, 1.25))) +
+    labs( x = expression(beta), y = 'r') +
+    scale_fill_gradient(name = expression(lambda[1](G[m])), limits=c(min(tmp$M_lambda1), max(tmp$M_lambda1)), low = "blue", high = "red") +
+    theme_bw() 
+  
   
   tmp4 = tmp[tmp$rho == 2, ]
   p_degrees_m_tilde <- ggplot() +
