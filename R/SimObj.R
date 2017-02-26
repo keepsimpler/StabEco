@@ -2,12 +2,24 @@ library(R6)
 
 #' @title The root class(interface) for all simulation objects
 #' @description A classical simulation includes several steps: 
-#' 1. set model, such as Ordinary Differential Equaitons, Stochastic Differential Equation, or some kind of agent-based model.
-#' 2. set timesteps, [steps] with [stepwise] increment.
-#' 3. set initial values, for all the state variables.
-#' 4. set parameters, which adhere to the model.
-#' 5. start simulate, which will produce the output data.
-#' 6. get output of the simulation, in order for further data analysis.
+#' \describe{
+#' \item{1.}{set Model, such as Ordinary Differential Equaitons, Stochastic Differential Equation, or some kind of agent-based model.}
+#' \item{2.}{set Timesteps, [steps] with [stepwise] increment.}
+#' \item{3.}{set Initial values, for all the state variables.}
+#' \item{4.}{set Parameters, which adhere to the Model.}
+#' \item{5.}{start Simulation, which will produce the output data.}
+#' \item{6.}{get Output of the Simulation, in order for further data analysis.}
+#' }
+#' @field model, times, init, params
+#' @field status, current status of the simulation object, status can only change from 0 to 5:
+#' \describe{
+#' \item{0}{the simulation object is initialized.}
+#' \item{1}{the Model is setted.}
+#' \item{2}{the Times is setted.}
+#' \item{3}{the Initial values of all state variables are setted.}
+#' \item{4}{the Parameters of Model is setted.}
+#' \item{5}{the simulation is correctly completed, and the Output is gotten.}
+#' }
 SimObj <- R6Class('SimObj', 
   public = list(
     set_model = function() {
@@ -32,14 +44,15 @@ SimObj <- R6Class('SimObj',
     initialize = function() {
       cat('Initialize SimObj object.\n')
     },
-#  ),
-#  private = list(
     # reference to other object that implement the real simulation
     refObj = NULL,
-    # current state of the simulation object: is_setted_(model, times, init, params, out)
-    state = NULL,
+    
+    model = NULL,
+    times = NULL,
     steps = NULL,
     stepwise = NULL,
     xinit = NULL,
-    params = NULL
+    params = NULL,
+    
+    status = NULL
   ))
