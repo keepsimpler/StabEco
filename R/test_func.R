@@ -144,7 +144,7 @@ test_lv2 <- function(coeffs, graphs, xinit_sd = 0.5, flag = 'auto') {
   })
 }
 
-test_lv2_press <- function(coeffs, graphs, extension = 10) {
+test_lv2_press <- function(coeffs, graphs, perturb_num = NULL,  extension = 10) {
   graphs_xstars <- ddply(coeffs, .variables = .(id), function(coeff) {
     print(coeff$id)
     n1 = coeff$n1
@@ -165,8 +165,10 @@ test_lv2_press <- function(coeffs, graphs, extension = 10) {
     graphs_index <- coeff$graphs_index
     graphm <- graphs[[coeff$graphs_index]]
     
+    if (is.null(perturb_num))
+      perturb_num = r.steps * extension
     meanfieldMutual <- MeanFieldMutual$new(n1 = n1, s = s, c = c, km = km, m = m, h = h, delta = delta, graphm = graphm)
-    meanfieldMutual$sim_lv2_press(perturb_type = 'growthrate_all', perturb_num = r.steps * extension, r.delta.mu = r.stepwise, r.delta.sd = 0, xstars.sd = 0.1, is.out = FALSE, r = rmax, steps = 50, stepwise = 1,  method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-5)
+    meanfieldMutual$sim_lv2_press(perturb_type = 'growthrate_all', perturb_num = perturb_num, r.delta.mu = r.stepwise, r.delta.sd = 0, xstars.sd = 0.5, is.out = FALSE, r = rmax, steps = 50, stepwise = 1,  method = 'lsoda', jactype = 'fullusr', atol = 1e-8, rtol = 1e-8, extinct_threshold = 1e-5)
     out <- meanfieldMutual$simLV2Press$out_press
     ldply(out, function(one) {
       xstars <- one$xstars

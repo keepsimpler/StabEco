@@ -22,7 +22,7 @@ alphas = seq(from = alpha_min, to = alpha_max, by = by)
 gammas = 1/ alphas + 1 #seq(from = 2, to = 10, by = 0.1) # exponent 
 
 #graphs_all = list()
-graphs_xstars_for_means <- ddply(data.frame(idx = 1:1), .variables = c('idx'), function(i) {
+graphs_xstars <- ddply(data.frame(idx = 1:10), .variables = c('idx'), function(i) {
   graphs <- get_graphs_sf(n1, km, alpha_min = alpha_min, alpha_max = alpha_max, by = by, ntry = 500)
   #graphs_all = c(graphs_all, graphs)
   #sapply(graphs, sum)
@@ -31,11 +31,11 @@ graphs_xstars_for_means <- ddply(data.frame(idx = 1:1), .variables = c('idx'), f
   graphs_hetero$alpha = alphas
   #graphs_degrees = get_graphs_degrees(graphs)
   
-  coeffs = get_coeffs(graphs = graphs, graphs.start = 1, graphs.by = 1, n1 = n1, km = km, s = s, h = h, delta = delta, semicircle_real = semicircle_real, rhos = c(0.5, 1., 2), alphas = c(3), rmax = 2, r.stepwise = 0.01)  # rhos = c(0.5, 1., 2)  #rmax = 0.5
+  coeffs = get_coeffs(graphs = graphs, graphs.start = 1, graphs.by = 1, n1 = n1, km = km, s = s, h = h, delta = delta, semicircle_real = semicircle_real, rhos = c(0.5, 1., 2), alphas = c(3), rmax = 1, r.stepwise = 0.01)  # rhos = c(0.5, 1., 2)  #rmax = 0.5
   nrow(coeffs)
   
   # simulate press
-  graphs_xstars <- test_lv2_press(coeffs, graphs)
+  graphs_xstars <- test_lv2_press(coeffs, graphs) #, perturb_num = 10
   graphs_xstars <- merge(graphs_xstars, graphs_hetero, by = 'graphs_index')
   graphs_xstars
 })
@@ -81,8 +81,8 @@ ggplot(tmp, aes(x = r, y = Jshadow_lambda1, group = variance_avg, color = varian
 #   geom_smooth(method = 'lm')
 
 
-r = 1 # 0 0.5 1
-graphs_xstars_auto_r10 <- ddply(data.frame(idx = 1:20), .variables = c('idx'), function(one) {
+r = 0.5 # 0 0.5 1
+graphs_xstars_auto_r05 <- ddply(data.frame(idx = 1:20), .variables = c('idx'), function(one) {
   graphs <- get_graphs_sf(n1, km, alpha_min = alpha_min, alpha_max = alpha_max, by = by, ntry = 500)
   #graphs_all = c(graphs_all, graphs)
   #sapply(graphs, sum)
@@ -91,7 +91,7 @@ graphs_xstars_auto_r10 <- ddply(data.frame(idx = 1:20), .variables = c('idx'), f
   graphs_hetero$alpha = alphas
   graphs_degrees = get_graphs_degrees(graphs)
   
-  coeffs = get_coeffs(graphs = graphs, graphs.start = 1, graphs.by = 1, n1 = n1, km = km, s = s, h = h, delta = delta, semicircle_real = semicircle_real, rhos = c(0.5, 1., 2), alphas = c(3), rmax = r, r.stepwise = 0.01)  # rhos = c(0.5, 1., 2)
+  coeffs = get_coeffs(graphs = graphs, graphs.start = 1, graphs.by = 1, n1 = n1, km = km, s = s, h = h, delta = delta, semicircle_real = semicircle_real, rhos = c(0.5, 1, 2, 4), alphas = c(3), rmax = r, r.stepwise = 0.01)  # rhos = c(0.5, 1., 2)
   nrow(coeffs)
   
   # simulate auto

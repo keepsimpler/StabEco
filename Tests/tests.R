@@ -55,13 +55,14 @@ print(get(plot_names[i]))  #
 dev.off()
 
 ### print Figure 5
-i = 1
-filename <- paste('hetero_abundance_min_', i, '.png', sep = '')
+rho = 0.5  # 0.5 1 2 4
+i = 4 # 1 2 3 4
+plot_names = c('p_xstars_min','p_M_lambda1', 'p_M_tilde_lambda1', 'p_Jshadow_lambda1')
+filename <- paste(plot_names[i],'_rho', rho, '.png', sep = '')
 width = 120 #mm
 heights = c(1.2)
 png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
 #pdf(filename, width = 5, height = 5 / 1.3)
-plot_names = c('p_xstars_min')
 print(get(plot_names[i]))  #
 dev.off()
 
@@ -74,6 +75,29 @@ heights = c(1.2, 1.2, 1.2, 1.2)
 png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
 #pdf(filename, width = 5, height = 5 / 1.3)
 plot_names = c('p_M_lambda1', 'p_M_tilde_lambda1', 'p_Jshadow_lambda1', 'p_degrees_m_tilde')
+print(get(plot_names[i]))  #
+dev.off()
+
+
+### print Figures for Persistence
+i = 1
+filename <- paste('persistence_', i, '.png', sep = '')
+width = 100 #mm
+heights = c(0.8, 0.6)
+png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
+#pdf(filename, width = 5, height = 5 / 1.3)
+plot_names = c('press_persistence_1', 'press_persistence_2')
+print(get(plot_names[i]))  #
+dev.off()
+
+### print Figures for ARS and resilience
+#i = 1
+filename <- paste('ARS_resilience', '.png', sep = '')
+width = 100 #mm
+heights = c(0.8)
+png(filename, w = width, h = width / heights[1], units = 'mm', type = 'cairo', res = 300)
+#pdf(filename, width = 5, height = 5 / 1.3)
+plot_names = c('p_xstars_min_resilience')
 print(get(plot_names[i]))  #
 dev.off()
 
