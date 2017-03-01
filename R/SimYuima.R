@@ -17,7 +17,7 @@ SimYuima <- R6Class('SimYuima',
     initialize = function() {
       cat('Initialize the SimYuima object.')
       self$refObj = setYuima()
-      self$state = 0
+      self$status = 0
     },
     set_drift = function() {
       cat('Set drift vector for SimYuima object')
@@ -32,7 +32,7 @@ SimYuima <- R6Class('SimYuima',
       cat('Set model for SimYuima object.')
       model = setModel(drift = self$drift, diffusion = self$diffusion, solve.variable = self$variables, state.variable = self$variables)
       self$refObj@model = model
-      self$state = 1
+      self$status = 1
     },
     set_times = function(steps, stepwise) {
       cat('Set timesteps for SimYuima object.')
@@ -40,7 +40,7 @@ SimYuima <- R6Class('SimYuima',
       self$refObj@sampling = sampling
       self$steps = steps
       self$stepwise = stepwise
-      self$state = 2
+      self$status = 2
     },
     sim = function() {
       cat('simulate SimYuima object, produce the output.')

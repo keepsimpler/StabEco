@@ -4,7 +4,7 @@ library(igraph)
 #' @title The root class of all graph objects
 #' @field type graph type
 #' @field n number of nodes
-#' @field graph inner matrix of the graph
+#' @field G inner represent of the graph, using \code{igraph} package
 Graph <- R6Class('Graph',
   public = list(
     type = NULL,
@@ -13,10 +13,9 @@ Graph <- R6Class('Graph',
       cat('Initialize Graph object.\n')
     },
     get_graph = function() {
-      private$graph
     }
   ),
   private = list(
-    graph = NULL
+    G = NULL
   ))
 

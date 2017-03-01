@@ -10,7 +10,7 @@ library(R6)
 #' \item{5.}{start Simulation, which will produce the output data.}
 #' \item{6.}{get Output of the Simulation, in order for further data analysis.}
 #' }
-#' @field model, times, init, params
+#' @field model, times, xinit, params, out
 #' @field status, current status of the simulation object, status can only change from 0 to 5:
 #' \describe{
 #' \item{0}{the simulation object is initialized.}
@@ -22,27 +22,43 @@ library(R6)
 #' }
 SimObj <- R6Class('SimObj', 
   public = list(
+    initialize = function() {
+      self$status = 0 #
+      cat('Initialize SimObj object...\n')
+    },
     set_model = function() {
-      cat('Set model for SimObj object.\n')
+      # current status of the simulation object must be Initialized(0)
+      stopifnot(self$status == 0) 
+      self$status = 1
+      cat('Set model for SimObj object...\n')
     },
     set_times = function() {
-      cat('Set timesteps for SimObj object.\n')
+      # current status of the simulation object must be Model-setted(1)
+      stopifnot(self$status == 1) 
+      self$status = 2
+      cat('Set timesteps for SimObj object...\n')
     },
     set_init = function(xinit) {
-      #cat('Set initial values for SimObj object.\n')
+      # current status of the simulation object must be Times-setted(2)
+      stopifnot(self$status == 2) 
+      self$status = 3
+      #cat('Set initial values for SimObj object...\n')
       self$xinit = xinit
     },
     set_params = function() {
-      cat('Set parameters for SimObj object.\n')
+      # current status of the simulation object must be InitialValues-setted(3)
+      stopifnot(self$status == 3) 
+      self$status = 4
+      cat('Set parameters for SimObj object...\n')
     },
     sim = function() {
-      cat('Simulate for SimObj object, produce the output.\n')
+      # current status of the simulation object must be Params-setted(4)
+      stopifnot(self$status == 4) 
+      self$status = 5
+      cat('Simulate for SimObj object, produce the output...\n')
     },
     get_out = function() {
       cat('Get the output of SimObj object.\n')
-    },
-    initialize = function() {
-      cat('Initialize SimObj object.\n')
     },
     # reference to other object that implement the real simulation
     refObj = NULL,
@@ -53,6 +69,7 @@ SimObj <- R6Class('SimObj',
     stepwise = NULL,
     xinit = NULL,
     params = NULL,
+    out = NULL,
     
     status = NULL
   ))
