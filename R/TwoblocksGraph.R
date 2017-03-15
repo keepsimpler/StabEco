@@ -19,6 +19,13 @@ TwoblocksGraph <- R6Class('TwoblocksGraph',
       self$n2 = n2
       self$k = k
       self$n <- self$n1 + self$n2
-      private$graph <- graph
+      private$G <- graph_from_adjacency_matrix(graph)
+    },
+    get_graph = function() {
+      graph <- as.matrix(as_adjacency_matrix(private$G))
+      return(graph)
+    },
+    plot = function() {
+      plot(private$G) # , layout = layout_as_bipartite
     }
   ))

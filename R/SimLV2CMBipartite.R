@@ -80,17 +80,23 @@ params_lv2_cm <- function(coeffs, graphc, graphm) {
 
 #' @title Simulation for LV2 model
 #' @examples 
-#' SimLV2Bipartite <- SimLV2Bipartite$new()
-#' SimLV2Bipartite$sim(steps, stepwise, xinit, coeffs, graphc, graphm)
-SimLV2Bipartite <- R6Class('SimLV2Bipartite',
+#' SimLV2CMBipartite <- SimLV2CMBipartite$new()
+#' SimLV2CMBipartite$sim(steps, stepwise, xinit, coeffs, graphc, graphm)
+SimLV2CMBipartite <- R6Class('SimLV2CMBipartite',
   inherit = SimODE,
   public = list(
+    coeffs = NULL,
+    graphc = NULL,
+    graphm = NULL,
     set_model = function() {
-      super$set_model()
+      #super$set_model()
       self$model <- model_lv2_cm
     },
     set_params = function(coeffs, graphc, graphm) {
-      super$set_params()
+      #super$set_params()
+      self$coeffs = coeffs
+      self$graphc = graphc
+      self$graphm = graphm
       self$params = params_lv2_cm(coeffs, graphc, graphm)
     },
     simulate = function(steps, stepwise, xinit, coeffs, graphc, graphm) {

@@ -23,38 +23,38 @@ library(R6)
 SimObj <- R6Class('SimObj', 
   public = list(
     initialize = function() {
-      self$status = 0 #
+      #self$status = 0
       cat('Initialize SimObj object...\n')
     },
     set_model = function() {
       # current status of the simulation object must be Initialized(0)
-      stopifnot(self$status == 0) 
-      self$status = 1
+      #stopifnot(self$status == 0) 
+      #self$status = 1
       cat('Set model for SimObj object...\n')
     },
     set_times = function() {
       # current status of the simulation object must be Model-setted(1)
-      stopifnot(self$status == 1) 
-      self$status = 2
+      #stopifnot(self$status == 1) 
+      #self$status = 2
       cat('Set timesteps for SimObj object...\n')
     },
     set_init = function(xinit) {
       # current status of the simulation object must be Times-setted(2)
-      stopifnot(self$status == 2) 
-      self$status = 3
+      #stopifnot(self$status == 2) 
+      #self$status = 3
       #cat('Set initial values for SimObj object...\n')
       self$xinit = xinit
     },
     set_params = function() {
       # current status of the simulation object must be InitialValues-setted(3)
-      stopifnot(self$status == 3) 
-      self$status = 4
+      #stopifnot(self$status == 3) 
+      #self$status = 4
       cat('Set parameters for SimObj object...\n')
     },
     sim = function() {
       # current status of the simulation object must be Params-setted(4)
-      stopifnot(self$status == 4) 
-      self$status = 5
+      #stopifnot(self$status == 4) 
+      #self$status = 5
       cat('Simulate for SimObj object, produce the output...\n')
     },
     get_out = function() {

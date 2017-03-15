@@ -13,6 +13,9 @@ Graph <- R6Class('Graph',
       cat('Initialize Graph object.\n')
     },
     get_graph = function() {
+    },
+    is_connected = function(mode = c('weak', 'strong')) {
+      is_connected(private$G, mode)
     }
   ),
   private = list(
