@@ -5,7 +5,7 @@ Version: 0.1
 Date: 2016-10-1
 Author: KeepSimpler
 Maintainer: KeepSimpler <fengwenfeng@gmail.com>
-Description:
+Description: 
 Imports:
     deSolve (>= 1.10-8),
     plyr (>= 1.8.1),
@@ -14,3 +14,4 @@ Imports:
     yuima
 License: What license is it under?
 LazyData: TRUE
+Suggests: testthat
