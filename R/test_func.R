@@ -1,6 +1,9 @@
 library(R6)
 library(plyr)
 
+
+
+
 ### Test functions
 
 get_coeffs_variance <- function(graphm, n1 = 50, km = 5, s = 1, h = 0.1, rhos = c(0.5, 1., 2, 3, 4), alphas = c(3), r.sd = c(0.1, 0.2), s.sd = c(0.5), c.sd = c(0.5), m.sd = c(0.5), rmax = 1, r.stepwise = 0.005) {

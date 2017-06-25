@@ -1,5 +1,15 @@
 library(R6)
 
+#' @title get the mean semicircle eigenvalue of samples of bipartite regular graphs
+real_semicircle_bipartite_regular <- function(n1, k, samples_num = 100) {
+  tmp <- sapply(1:samples_num, function(i) {
+    biGraph <- BiGraph$new(type = 'bipartite_regular', n1 = n1, k = k)
+    get_m_semicircle_real(biGraph)
+  })
+  mean(tmp)
+}
+
+
 #' @title The mean field model for LV2-CM-Bipartite, i.e. Lotka-Volterra (LV) Equations of Holling type II for a community with two groups with Competitive intra-group interactions and Mutualistic inter-group interactions
 #' @note Restrictions:
 #' \describe{

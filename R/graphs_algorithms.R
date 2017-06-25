@@ -1,3 +1,6 @@
+
+
+
 #' @title Generate bipartite graphs with different degree heterogeneity by rewiring links (or Nestedness optimization algrithm).
 #' @description 
 #' 1) start from a regular bipartite graph.
@@ -158,6 +161,7 @@ get_graphs <- function(n1, km) {
   graphs <- bigraphs_rewiring(biGraph$get_graph(is_adj = FALSE))
   graphs
 }
+
 get_graphs_hetero <- function(graphs) {
   # compute degree heterogeneitys of graphs
   graphs_hetero <- ldply(graphs, function(graph) {
@@ -166,6 +170,7 @@ get_graphs_hetero <- function(graphs) {
   graphs_hetero$graphs_index <- 1:nrow(graphs_hetero)
   graphs_hetero
 }
+
 get_graphs_degrees <- function(graphs) {
   graphs_degrees <- ldply(graphs, function(graph) {
     degrees <- c(rowSums(graph), colSums(graph))
@@ -183,29 +188,28 @@ get_graphs_all <- function(n1, km, ntry) {
   graphs_all
 }
 
+#' @title generate a list of scale-free bipartite graphs
 #' @examples 
-#' get_graphs_sf(n1 = 50, km = 5, alpha_min = 0, alpha_max = 4, by = 0.04, ntry = 200)
-get_graphs_sf <- function(n1, km, alpha_min = 0.5, alpha_max = 4, by = 0.04, ntry = 100) {
-  alphas = seq(from = alpha_min, to = alpha_max, by = by)
-  gammas = 1/ alphas + 1 #seq(from = 2, to = 10, by = 0.1) # exponent 
-  graphs <- lapply(alphas, function(alpha) {
-    print(alpha)
+#' get_graphs_sf(n1 = 50, k = 5, beta_min = 0, beta_max = 4, by = 0.04, ntry = 200)
+get_graphs_sf <- function(n1, k, beta_min = 0.5, beta_max = 4, by = 0.04, ntry = 100) {
+  betas = seq(from = beta_min, to = beta_max, by = by)
+  gammas = 1/ betas + 1 #seq(from = 2, to = 10, by = 0.1) # exponent 
+  graphs <- lapply(betas, function(beta) {
+    print(beta)
     #G = sample_fitness_pl(n1, n1 * km, exponent.out = gamma, exponent.in = gamma)
     flag = FALSE
     for (i in 1:ntry) {
-      G = sample_fitness(n1 * km, (1:n1)^-alpha, (1:n1)^-alpha)
-      graph <- as.matrix(as_adjacency_matrix(G))
-      G2 = igraph::graph_from_incidence_matrix(graph, add.names = NA)
-      if (igraph::is_connected(G2)  && sum(graph) == n1 * km) { #
+      graph = BiGraph$new(type = 'bipartite_sf', n1 = n1, k = k, beta = beta)
+      if (graph$is_connected()  && sum(graph$get_graph()) == 2 * n1 * k) { #
         flag = TRUE
         break
       } 
     }
-    if (sum(graph) != n1 * km) {
-      warning('sum(graph) != n1 * km')
+    if (sum(graph$get_graph()) != 2 * n1 * k) {
+      warning('sum(graph$get_graph()) != 2 * n1 * k')
     }
     if (flag == FALSE) {
-      warning(paste('alpha = ', alpha, 'fail!'))
+      warning(paste('beta = ', beta, 'fail!'))
       return(NULL)
     }
     else {
